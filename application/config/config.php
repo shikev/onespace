@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 | CHANGE THIS WHEN DEPLOYING
 */
-$config['base_url'] = 'http://localhost/onespace/';
+$config['base_url'] = 'http://www.onespace.io/';
 
 /*
 |--------------------------------------------------------------------------

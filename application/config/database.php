@@ -64,14 +64,14 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'onespace',
+	'hostname' => $_SERVER['RDS_HOSTNAME'],
+	'username' => $_SERVER['RDS_USERNAME'],
+	'password' => $_SERVER['RDS_PASSWORD'],
+	'database' => $_SERVER['RDS_DB_NAME'],
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
-	'db_debug' => TRUE,
+	'db_debug' => FALSE,
 	'cache_on' => FALSE,
 	'cachedir' => '',
 	'char_set' => 'utf8',
@@ -81,5 +81,6 @@ $db['default'] = array(
 	'compress' => FALSE,
 	'stricton' => FALSE,
 	'failover' => array(),
-	'save_queries' => TRUE
+	'save_queries' => TRUE,
+	'port' => $_SERVER['RDS_PORT'],
 );
