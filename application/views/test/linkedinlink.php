@@ -1,0 +1,1 @@
+<a href="https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=77en98pd8z31xk&redirect_uri=http%3A%2F%2Flocalhost%2Fmaroon%2Ftest%2Flinkedintest&state=DCEeFWf45A53sdfKef424&scope=r_basicprofile">Get info from linked in here</a>

@@ -1,0 +1,160 @@
+//THE FOLLOWING VARIABLES ARE WHAT'S PRESENT IN FORMINPUT
+$personName
+$email
+$linkedin
+$phone
+$pagetheme
+$pagecolor
+$fontcolor
+$userHeaderFont
+$userContentFont
+$profileimg
+$uploadimg
+//BIO
+$bioTitle //we're having a new bio section
+$bioDescription 
+//EDUCATION
+$secEduTitle //The education stuff is the same, for now
+$secEduSchool1 - 3
+$secEduLoc1 - 3
+$secEduGrad1 - 3
+secEduMajor1 - 3
+//EXPERIENCE
+$secExpTitle //Title of the section
+$timeFrame1 - 7
+$jobTitle1- 7
+$companyName1 - 7
+$jobDescription1- 7 
+//PROJECTS
+$secProjTitle
+$projectName1-7
+$projectDescription1-7
+$projectLink1 - 7
+//SKILLS
+$skill1 - 15
+//END FORMINPUT VARS
+
+//HERE ARE THE VARIABLES AVAILABLE TO THE VIEW IN THE FORM OF $data (all views will have $data passed into them. No longer splitting up into eduData and stuff since there's no reason to do that really, and it makes it harder to manage)
+//You can access these variables in the view by just giong like $personName or like $secEduSchool[1] like before. 
+//There's a few variables at the bottom called MAX_SOMETHING. These are defined at the top of userpage.php and we can use it to adjust everything across the board now if we decide to add more sections for some section or something like that. Please use those variables as your upper limit when you are looping through skills[] or secEduSchool[] or timeFrames[] or any array.
+
+  'personName' => string 'Kevin Shi' (length=9)
+  'email' => string '' (length=0)
+  'linkedin' => string '' (length=0)
+  'phone' => string '' (length=0)
+  'pagecolor' => string '#ad4c4c' (length=7)
+  'userHeaderFont' => string 'lato' (length=4)
+  'userContentFont' => string 'lato' (length=4)
+  'fontcolor' => string '#ffffff' (length=7)
+  'uploadimg' => string '' (length=0)
+  'profileimg' => string '' (length=0)
+  'customCSS' => string '' (length=0)
+  'secEduTitle' => string 'Education' (length=9)
+  'secEduSubTitle' => string 'These are a list of places where I honed my skills to prepare for my professional career' (length=88)
+  'secEduSchool' => 
+    array (size=3)
+      0 => string '' (length=0)
+      1 => string 'Something University' (length=20)
+      2 => string '' (length=0)
+  'secEduLoc' => 
+    array (size=3)
+      0 => string '' (length=0)
+      1 => string 'Maroon, PM ' (length=11)
+      2 => string '' (length=0)
+  'secEduGrad' => 
+    array (size=3)
+      0 => string '' (length=0)
+      1 => string 'Forever' (length=7)
+      2 => string '' (length=0)
+  'secEduMajor' => 
+    array (size=3)
+      0 => string '' (length=0)
+      1 => string 'Maroon Marjo' (length=12)
+      2 => string '' (length=0)
+  'secEduClasses' => 
+    array (size=3)
+      0 => string '' (length=0)
+      1 => string 'PM PROJECT MAROON' (length=17)
+      2 => string '' (length=0)
+  'secExpTitle' => string 'Experience' (length=10)
+  'secExpSubTitle' => string 'A look into my past professional history' (length=40)
+  'timeFrames' => 
+    array (size=7)
+      0 => string '' (length=0)
+      1 => string '' (length=0)
+      2 => string '' (length=0)
+      3 => string '' (length=0)
+      4 => string '' (length=0)
+      5 => string '' (length=0)
+      6 => string '' (length=0)
+  'projectDescriptions' => 
+    array (size=7)
+      0 => string '' (length=0)
+      1 => string '' (length=0)
+      2 => string '' (length=0)
+      3 => string '' (length=0)
+      4 => string '' (length=0)
+      5 => string '' (length=0)
+      6 => string '' (length=0)
+  'companyNames' => 
+    array (size=7)
+      0 => string '' (length=0)
+      1 => string '' (length=0)
+      2 => string '' (length=0)
+      3 => string '' (length=0)
+      4 => string '' (length=0)
+      5 => string '' (length=0)
+      6 => string '' (length=0)
+  'jobDescriptions' => 
+    array (size=7)
+      0 => string '' (length=0)
+      1 => string '' (length=0)
+      2 => string '' (length=0)
+      3 => string '' (length=0)
+      4 => string '' (length=0)
+      5 => string '' (length=0)
+      6 => string '' (length=0)
+  'secProjTitle' => string '' (length=0)
+  'secProjSubTitle' => string '' (length=0)
+  'projectNames' => 
+    array (size=7)
+      0 => string '' (length=0)
+      1 => string '' (length=0)
+      2 => string '' (length=0)
+      3 => string '' (length=0)
+      4 => string '' (length=0)
+      5 => string '' (length=0)
+      6 => string '' (length=0)
+  'projectLinks' => 
+    array (size=7)
+      0 => string '' (length=0)
+      1 => string '' (length=0)
+      2 => string '' (length=0)
+      3 => string '' (length=0)
+      4 => string '' (length=0)
+      5 => string '' (length=0)
+      6 => string '' (length=0)
+  'secSkillsTitle' => string 'Skills' (length=6)
+  'secSkillsSubTitle' => string 'A list of the invaluable skills that I bring to the table.' (length=58)
+  'skills' => 
+    array (size=15)
+      0 => string 'CSS' (length=3)
+      1 => string 'HTML' (length=4)
+      2 => string 'Javascript' (length=10)
+      3 => string '' (length=0)
+      4 => string '' (length=0)
+      5 => string '' (length=0)
+      6 => string '' (length=0)
+      7 => string '' (length=0)
+      8 => string '' (length=0)
+      9 => string '' (length=0)
+      10 => string '' (length=0)
+      11 => string '' (length=0)
+      12 => string '' (length=0)
+      13 => string '' (length=0)
+      14 => string '' (length=0)
+  'MAX_EXPERIENCE' => int 7
+  'MAX_EDUCATION' => int 3
+  'MAX_SKILLS' => int 15
+  'MAX_PROJECTS' => int 7
+

@@ -1,0 +1,230 @@
+
+
+body {
+    background-color: #383838;
+    background-repeat: no-repeat;
+    background-size:   cover;  
+    background-position: center center;
+    background-attachment: fixed;
+    color: #fff;
+}
+
+/*NAV*/
+.nav-row{
+    display: block;
+    margin: 0 auto;
+    width:100vw;
+    margin-top: 20px;
+}
+.hex-row{
+    display: table;
+    margin: 0 auto;
+}
+/*HEXAGONS*/
+.hex {
+    float: left;
+    margin-left: 3px;
+    margin-bottom: -26px;
+    cursor: pointer;
+}
+.hex .top {
+    width: 0;
+    border-left: 52px solid transparent;
+    border-right: 52px solid transparent;
+}
+.hex .middle {
+    width: 104px;
+    height: 60px;
+    display:table-cell;
+    vertical-align: middle;
+    font-size: 1.4em;
+}
+.hex .hex-content{
+    margin: 0 auto;
+}
+.hex .bottom {
+    width: 0;
+    border-left: 52px solid transparent;
+    border-right: 52px solid transparent;
+}
+.hex-row-list{
+    clear: left;
+}
+.hex-row-list.even {
+    margin-left: 53px;
+}
+
+
+/*CONTENT*/
+
+.info-section{
+    height:95vh;
+    display:none;
+    width: 100%;
+    overflow: hidden;
+}
+
+.info-section > .container{
+    width: 100%;
+    height: 99%;
+    overflow: auto;
+    padding-right: 15px;
+}
+
+.container::-webkit-scrollbar {
+ display: none;
+}
+
+/*SKILLS*/
+.skill-wrapper{
+   display: block;
+    margin: 0 auto;
+}
+/*.skill-item{
+    display:table;
+    vertical-align: middle;
+    float: left;
+    margin-left: 3px;
+    margin-right: 3px;
+    width:100px !important;
+    height:100px !important;
+    border-radius: 50%;
+    background-color: black;
+    overflow:auto;
+}
+.skill-text{
+    display:table-cell;
+    vertical-align: middle;
+}*/
+/*CONTACT*/
+.icon{
+    font-size:3em !important;
+}
+.contact-row{
+    display: block;
+    margin: 0 auto;
+    width:100vw;
+}
+#contact .hex {
+    float: left;
+    margin-left: -25px;
+    margin-right:-25px;
+    margin-bottom: -26px;
+    cursor: pointer;
+    -ms-transform: scale(0.5,0.5); /* IE 9 */
+    -webkit-transform: scale(0.5,0.5); /* Safari */
+    transform: scale(0.5,0.5); /* Standard syntax */
+}
+/*}
+#contact.hex .top {
+    width: 0;
+    border-left: 13px solid transparent;
+    border-right: 52px solid transparent;
+}
+#contact.hex .middle {
+    width: 52px;
+    height: 30px;
+    display:table-cell;
+    vertical-align: middle;
+}
+#contact.hex .hex-content{
+    margin: 0 auto;
+}
+#contact .hex .bottom {
+    width: 0;
+    border-left: 52px solid transparent;
+    border-right: 52px solid transparent;
+}*/
+
+
+/*TEXT*/
+h1 {
+    font-size: 3.2em;
+    font-weight: 500;
+}
+h2 {
+    font-size: 2em;
+    font-weight: 500;
+    margin-top: 15px;
+}
+h3 {
+    font-size: 1.8em;
+    font-weight: 500;
+    margin-top: 0px;
+    margin-bottom: 30px;
+}
+h4 {
+    font-size: 1.6em;
+    font-weight: 500;
+}
+p {
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+.bolder {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+.smaller {
+    font-size: 0.9em;
+}
+hr {
+    position: relative;
+    top: 3.6em;
+    margin-bottom: 0px;
+    border-color: #ddd;
+}
+a {
+    color: #00a2e8;
+}
+a:hover {
+    color: #0094d4;
+    text-decoration: none;
+}
+a:active {
+    color: #0094d4;
+    text-decoration: none;
+}
+a:focus {
+    color: #0094d4;
+    text-decoration: none;
+}
+
+/*HEADER*/
+#topback {
+    width: 100%;
+    height: 120px;
+}
+#nameback {
+    width: 100%;
+    height: 500px;
+    margin-top: -80px;
+    text-align: center;
+}
+#nameback h1 {
+    font-size: 5.2em;
+    font-weight: 500;
+    color: #fcfcfc;
+    margin-bottom: 0px;
+}
+#nameback h2 {
+    font-size: 2.4em;
+    font-weight: 500;
+    color: #fafafa;
+    margin-top: 0px;
+}
+.profile-pic{
+    object-fit: cover;
+    width:200px;
+    height:200px;
+    border-radius:50%;
+}
+
+
+
+/*FOOTER*/
+footer {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /*color: #fcfcfc;*/
+}

@@ -1,0 +1,189 @@
+/*GENERAL*/
+html {
+    height: 100%;
+}
+body {
+    background-color: #fcfcfc;
+    height: 100%;
+    color: #505050;
+}
+
+/*TEXT*/
+h1 {
+    color: #303030;
+    font-size: 4.8em;
+}
+h2 {
+    color: #303030;
+    font-size: 3em;
+}
+h3 {
+    font-size: 2em;
+    color: #303030;
+}
+h4 {
+    font-size: 1.3em;
+    color: #505050;
+}
+p {
+    font-size: 1.2em;
+    color: #505050;
+}
+hr {
+    border-top: 1px solid #ddd;
+}
+.hcenter {
+    text-align: center;
+}
+
+/*NAVBAR*/
+.navbar-default {
+    font-size: 1em;
+    background-color: #fcfcfc;
+    border-bottom: 1px solid #ddd;
+}
+.navbar-brand {
+    font-size: 1.2em;
+}
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+  color: #303030;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #505050;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #505050;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  color: #303030;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu {
+  background-color: #fcfcfc;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a {
+  color: #505050;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
+  color: #303030;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
+  background-color: #505050;
+}
+
+/*COVER PAGE*/
+<<<<<<< Updated upstream
+/* Extra markup and styles for table-esque vertical and horizontal centering */
+
+=======
+>>>>>>> Stashed changes
+.site-wrapper {
+    display: table;
+    width: 100%;
+    height: 100%;
+    /* For at least Firefox */
+    min-height: 100%;
+}
+.site-wrapper-inner {
+    display: table-cell;
+    vertical-align: top;
+}
+.cover-container {
+    margin-right: auto;
+    margin-left: auto;
+}
+/* Padding for spacing */
+.inner {
+    padding: 30px;
+}
+/* Cover */
+.cover {
+    padding: 0 20px;
+    text-align: center;
+}
+.cover .btn-lg {
+    padding: 10px 20px;
+}
+/*Affix and center*/
+@media (min-width: 768px) {
+    /* Pull out the header and footer */
+    .masthead {
+        position: fixed;
+        top: 0;
+    }
+    .mastfoot {
+        position: fixed;
+        bottom: 0;
+    }
+    /* Start the vertical centering */
+    .site-wrapper-inner {
+        vertical-align: middle;
+    }
+    /* Handle the widths */
+    .masthead,
+    .mastfoot,
+    .cover-container {
+        width: 100%;
+        /* Must be percentage or pixels for horizontal alignment */
+    }
+}
+@media (min-width: 992px) {
+    .masthead,
+    .mastfoot,
+    .cover-container {
+        width: 700px;
+    }
+}
+
+/*SECTIONS*/
+.section {
+    padding-top: 36px;
+}
+.sectiontitle {
+    text-transform: uppercase;
+}
+.biotitle {
+    text-transform: uppercase;
+    text-align: center;
+    padding-bottom: 20px;
+}
+.rowentry {
+    padding-top: 16px;
+}
+.smalltitle {
+    color: #505050;
+    font-size: 0.8em;
+    padding-left: 18px;
+}
+
+
+
+/*SKILLS*/
+.skill-text{
+    display:table-cell;
+    vertical-align: middle;
+    font-size:1.4em;
+
+}
+
+.skill-item{
+    border-radius:50%;
+    width:200px;
+    height: 200px;
+    border-style:solid;
+    border-width: 3px;
+    border-color: black;
+    margin:auto;
+    display:table;
+        padding-left:20px;
+    padding-right:20px;
+}
+
+/*FOOTER*/
+#footer {
+    color: #505050;
+    clear: both;
+    padding-top: 8px;
+    padding-bottom: 16px;
+    text-align: center;
+}
