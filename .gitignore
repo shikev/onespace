@@ -43,3 +43,7 @@ Temporary Items
 .apdisk
 
 application/.htaccess
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
