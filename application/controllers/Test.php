@@ -6,7 +6,6 @@ class Test extends CI_Controller
         parent::__construct(); 
 
         $this->load->helper('url');
-        $this->load->library('tank_auth');
     } 
 
     public function index() 
@@ -14,16 +13,21 @@ class Test extends CI_Controller
         echo shell_exec("java -jar test.jar");
     } 
 
+    public function crypto() {
+        $this->load->model('user_model');
+        $this->user_model->setPageDescription("test@gmail.com", "fuck");
+    }
+
     public function linkedinlink(){
         $this->load->view('test/linkedinlink');
     }
 
     public function linkedintest(){
 
-        define('API_KEY',      '77en98pd8z31xk'                                          );
-        define('API_SECRET',   '0qtb9kcQM9FMAV93'                                       );
+        define('API_KEY',      '7534k4os9x9wbq'                                          );
+        define('API_SECRET',   'bkMvaKlUIHKZAP7E'                                       );
         // You must pre-register your redirect_uri at https://www.linkedin.com/secure/developer
-        define('REDIRECT_URI', 'http://localhost/maroon/test/linkedintest');
+        define('REDIRECT_URI', 'http://localhost/onespace/auth/linkedInSignIn');
         define('SCOPE',        'r_basicprofile r_emailaddress'                              );
         define('UNIQUESTATE', 'DCEeFWf45A53sdfKef424');
          
