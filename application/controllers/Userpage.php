@@ -4,7 +4,7 @@ class Userpage extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('user_model');
-		$this->load->library('tank_auth');
+		$this->load->model('domain_model');
 		$this->load->helper('url');
 		define('MAX_EXPERIENCE', 7);
 		define('MAX_PROJECTS', 7);
@@ -12,27 +12,95 @@ class Userpage extends CI_Controller{
 		define('MAX_SKILLS', 15);
 	}
 
+	public function test() {
+		echo "HI";
+	}
+
+	public function initialize() {
+		if(!$this->user_model->isLoggedIn()) {
+			redirect('', 'refresh');
+		}
+		if($this->user_model->isInitialized()) {
+			redirect('manage', 'location');
+		}
+		$headerData['pageTitle'] = "Domain Selection";
+		$data['baseURL'] = base_url();
+		$headerData['baseURL'] = base_url();
+
+		// Load the necessary scripts
+		$headerData['scripts'] = array();
+
+		$jsDirectory = 'assets/js/';
+		$headerData['scripts'][] = base_url() . $jsDirectory . 'domain-selector.js';
+
+		// Get data about user
+		$row = $this->user_model->getInfo();
+		if($row != null) {
+			$data['name'] = $row->name;
+			$data['email'] = $row->email;
+		}
+		else {
+			// should never get here
+			$this->user_model->logout();
+			redirect('', 'refresh');
+		}
+
+		$data['domain'] = 'userpage/initialize';
+
+		$this->load->view('templates/header', $headerData);
+		$this->load->view('templates/not_initialized_navbar',$data);
+		$this->load->view('content/domain_selector', $data);
+		$this->load->view('templates/footer');
+	}
+
 	public function manage(){
 		//If a user tries to access this page without being logged in
-		if(!$this->tank_auth->is_logged_in()){
-			redirect('');
+		if(!$this->user_model->isLoggedIn()){
+			redirect('', 'Location');
+		}
+		// If the user has made an account but has not filled in mandatory account info (email, domain of their choice)
+		else if(!$this->user_model->isInitialized()) {
+			redirect('userpage/initialize');
 		}
 		else{
-			$username = $this->tank_auth->get_username();
-			$xmlstring = $this->user_model->get_xml($username);
+			// set CSS
+			$headerData['CSSSources'] = array();
+			$headerData['CSSSources'][] = "http://fonts.googleapis.com/css?family=Lato";
+			$headerData['CSSSources'][] = "http://fonts.googleapis.com/css?family=Roboto";
+			$headerData['CSSSources'][] = "http://fonts.googleapis.com/css?family=Open+Sans";
+			$headerData['CSSSources'][] = "http://fonts.googleapis.com/css?family=Lora";
+			$headerData['CSSSources'][] = "http://fonts.googleapis.com/css?family=Dosis";
+			$headerData['CSSSources'][] = base_url() . "assets/css/spectrum.css";
+			$headerData['CSSSources'][] = base_url() . "assets/css/bootstrap.vertical-tabs.css";
+
+			// set js
+			$headerData['scripts'] = array();
+			$headerData['scripts'][] = base_url() . "assets/js/spectrum.js";
+			$headerData['scripts'][] = base_url() . "assets/js/manage.js";
+
+			$userInfo = $this->user_model->getInfo();
+			$domain = $userInfo->domain;
+			$xmlstring = $this->domain_model->getPageDescription($domain);
 			$xml = simplexml_load_string($xmlstring);
 			$data['submitpath'] = base_url() . 'userpage/update';
+			$data['domain'] = $domain;
+			$data['firstName'] = explode(' ',trim($userInfo->name))[0]; // Gets the first name
 
 			if($xml == false){
 				$this->set_default_values($data);
 				$this->load->helper('form');
-				$this->load->helper('url');
 				$this->load->library('form_validation');
 				
 				$headerData['pageTitle'] = " | Dashboard";
+				$headerData['baseURL'] = base_url();
 
-        		$this->load->view('templates/formheader', $headerData);
-				$this->load->view('templates/navbar');
+				// navbar data
+
+				$data['domain'] = $domain;
+				$data['baseURL'] = base_url();
+
+        		$this->load->view('templates/header', $headerData);
+				$this->load->view('templates/logged_in_navbar', $data);
 				$this->load->view('content/forminput',$data);
 				$this->load->view('templates/footer.php');
 			}
@@ -99,9 +167,10 @@ class Userpage extends CI_Controller{
 				$this->load->library('form_validation');
 				
 				$headerData['pageTitle'] = " | Dashboard";
+				$headerData['baseURL'] = base_url();
 
-        		$this->load->view('templates/formheader', $headerData);
-				$this->load->view('templates/navbar');
+        		$this->load->view('templates/header', $headerData);
+				$this->load->view('templates/logged_in_navbar', $data);
 				$this->load->view('content/forminput',$data);
 				$this->load->view('templates/footer.php');
 			}
@@ -324,17 +393,18 @@ class Userpage extends CI_Controller{
 				<skill>$skill15</skill>
 			</skills>
 		</info>";
-		$this->user_model->set_xml($this->tank_auth->get_username(), $toinsert);
+		$domain = $this->user_model->getDomain();
+		$this->domain_model->setPageDescription($domain, $toinsert);
 		$this->load->helper('url');
-		redirect(base_url() . $this->tank_auth->get_username(), 'refresh');
+		redirect(base_url() . $domain, 'refresh');
 		
 	}
 
-	public function view($username = NULL){
+	public function view($domain = NULL){
 		$this->load->helper('url');
-		if($username != NULL){
-			//$username = $this->tank_auth->get_username();
-			$xmlstring = $this->user_model->get_xml($username);
+		$headerData['baseURL'] = base_url();
+		if($domain != NULL){
+			$xmlstring = $this->domain_model->getPageDescription($domain);
 			$xml = simplexml_load_string($xmlstring);
             
 
@@ -376,11 +446,12 @@ class Userpage extends CI_Controller{
                	 $this->load->view('usertemplates/'.$pagetheme.'/footer', $data);
 
 			}
-			else if($this->tank_auth->is_logged_in() && $username == $this->tank_auth->get_username()){
+			else if($this->user_model->isLoggedIn()) {
 				$headerData['pageTitle'] = " | Empty Page";
+				$data['domain'] = $domain;
 
 				$this->load->view('templates/header.php', $headerData);
-				$this->load->view('templates/navbar');
+				$this->load->view('templates/logged_in_navbar', $data);
 				$this->load->view('content/nothing.php');
 				$this->load->view('templates/footer.php');
 			}
@@ -511,7 +582,7 @@ class Userpage extends CI_Controller{
 		$data['secProjSubTitle'] = $xml->projects->secProjSubTitle;
 
 		for($i = 1; $i <= MAX_EXPERIENCE; $i++){
-			$data['projectName' . $i] = $xml->projects->section[$i - 1]->projectName;
+			$data['projectName' . $i] = $xml->projects->section[$i - 1]->userprojectName;
 			$data['projectDescription' . $i] = $xml->projects->section[$i - 1]->projectDescription;
 			$data['projectLink' . $i] = $xml->projects->section[$i - 1]->projectLinke;
 		}
