@@ -14,6 +14,11 @@ class Test extends CI_Controller
         echo shell_exec("java -jar test.jar");
     } 
 
+    public function crypto() {
+        $this->load->model('user_model');
+        $this->user_model->setPageDescription("test@gmail.com", "fuck");
+    }
+
     public function linkedinlink(){
         $this->load->view('test/linkedinlink');
     }
