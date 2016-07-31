@@ -43,10 +43,7 @@ class Auth extends CI_Controller
 			    $email = $userData["email"];
 			    $name = $userData["givenName"] . " " . $userData["familyName"];
 			    $uid = $email;
-			    if (!$this->user_model->exists($uid)) {
-					$this->user_model->create($uid, $name, $email);
-				}
-				$this->user_model->login($uid);
+			    $this->initialize($uid, $name, $email);
 		    }
 		    else {
 		    	// failure, redirect to sign in page w/ message
