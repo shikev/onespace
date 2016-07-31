@@ -6,8 +6,28 @@ class User_model extends CI_Model {
                 $this->load->database();
         }
 
-        public function isLoggedIn($email, $sessionIdentifier, $login_token) {
-            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier, 'login_token' => $login_token));
+        // creates a user
+        public function create($email, $name) {
+            $data = array(
+                'email' => $email,
+                'name' => $name
+            );
+            $this->db->insert('users', $data);
+        }
+
+        // sets the domain of the account (what onespace domain they want)
+        public function setDomain($email, $domainIn) {
+            $this->db->set('domain', $domainIn);
+            $this->db->where('email', $email);
+            $this->db->update('users');
+        }
+
+        public function isLoggedIn($email, $sessionIdentifier, $loginToken) {
+            // if one of them isn't set
+            if (!$sessionIdentifer || !$loginToken) {
+                return false;
+            }
+            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
             $matches = false;
             $row = $query->row();
             if(isset($row)) {
@@ -18,9 +38,10 @@ class User_model extends CI_Model {
             if ($matches) {
                 // Generate a new login token to prevent prolonged exposure in the case of a security breach
                 $newLoginToken = $token = bin2hex(openssl_random_pseudo_bytes(16));
+                $hashedToken = password_hash($newLoginToken);
 
                 // Update the login token in the db
-                $this->db->set('login_token', $newLoginToken);
+                $this->db->set('login_token', $hashedToken);
                 $this->db->where('session_identifier', $sessionIdentifier);
                 $this->db->update('users'); // gives UPDATE `users` SET `login_token` = $newLoginToken WHERE `session_identifier` = $sessionIdentifier
 
@@ -28,11 +49,11 @@ class User_model extends CI_Model {
 
                 // TODO: flip this based on local/prod (we want secure flag = true on prod)
                 setcookie("lt", $newLoginToken, time() + 2592000, "/", "", false, true);
-
+                return true;
             }
             // User is not logged in
             else {
-                $this->logout($email);
+                return false;
             }
 
         }
