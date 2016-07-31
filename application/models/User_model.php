@@ -4,51 +4,114 @@ class User_model extends CI_Model {
         public function __construct()
         {
                 $this->load->database();
+                $this->load->helper('cookie');
         }
 
         // creates a user
-        public function create($email, $name) {
+        public function create($uid, $name, $email = null) {
             $data = array(
-                'email' => $email,
+                'uid' => $uid,
                 'name' => $name
             );
+            if($email) {
+                $data['email'] = $email;
+            }
             $this->db->insert('users', $data);
         }
 
+        public function login($uid) {
+            // gets new login token and SID
+            $this->generateNewToken($uid);
+        }
+
+        public function isInitialized() {
+            $sessionIdentifier = get_cookie('s');
+            $loginToken = get_cookie('lt');
+            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
+            $row = $query->row();
+            if(isset($row)) {
+                if (!$row->email || !$row->name || !$row->domain) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+            else {
+                return false;
+            }
+        }
+
+        public function exists($uid) {
+            $query = $this->db->get_where('users', array('uid' => $uid));
+            $row = $query->row();
+            if(isset($row)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        public function getEmail() {
+            $sessionIdentifier = get_cookie('s');
+            $loginToken = get_cookie('lt');
+            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
+            $row = $query->row();
+            if(isset($row)) {
+                return $row->email;
+            }
+            else {
+                return null;
+            }
+
+        }
+
+        public function getUID() {
+            $sessionIdentifier = get_cookie('s');
+            $loginToken = get_cookie('lt');
+            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
+            $row = $query->row();
+            if(isset($row)) {
+                return $row->uid;
+            }
+            else {
+                return null;
+            }
+        }
+
         // sets the domain of the account (what onespace domain they want)
-        public function setDomain($email, $domainIn) {
+        public function setDomain($domainIn) {
             $this->db->set('domain', $domainIn);
-            $this->db->where('email', $email);
+            $this->db->where('uid', $this->getUID());
             $this->db->update('users');
         }
 
-        public function isLoggedIn($email, $sessionIdentifier, $loginToken) {
+        public function isLoggedIn() {
             // if one of them isn't set
-            if (!$sessionIdentifer || !$loginToken) {
+            $sessionIdentifier = get_cookie('s');
+            $loginToken = get_cookie('lt');
+
+            var_dump($sessionIdentifier);
+            var_dump($loginToken);
+            if (!$sessionIdentifier || !$loginToken) {
                 return false;
             }
-            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
-            $matches = false;
+            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier));
             $row = $query->row();
             if(isset($row)) {
-                // If the password matches
-                $matches = true;
-            }
+                // If SID exists
 
+                $hashedToken = $row->login_token;
+                $matches = password_verify($loginToken, $hashedToken); // If tokens match, do a swap refresh
+            } 
+            else {
+                // No SID 
+                return false;
+            }
             if ($matches) {
                 // Generate a new login token to prevent prolonged exposure in the case of a security breach
-                $newLoginToken = $token = bin2hex(openssl_random_pseudo_bytes(16));
-                $hashedToken = password_hash($newLoginToken);
-
-                // Update the login token in the db
-                $this->db->set('login_token', $hashedToken);
-                $this->db->where('session_identifier', $sessionIdentifier);
-                $this->db->update('users'); // gives UPDATE `users` SET `login_token` = $newLoginToken WHERE `session_identifier` = $sessionIdentifier
-
-                // Set the cookies. Expires after a month of inactivity (this is arbitrary and does not really matter)
-
-                // TODO: flip this based on local/prod (we want secure flag = true on prod)
-                setcookie("lt", $newLoginToken, time() + 2592000, "/", "", false, true);
+                $this->swapToken($sessionIdentifier);
                 return true;
             }
             // User is not logged in
@@ -61,19 +124,21 @@ class User_model extends CI_Model {
         public function logout($email) {
             $this->db->set('login_token', '');
             $this->db->set('session_identifier', '');
+            setcookie("lt", null, time() + 2592000, "/", "", false, true);
+            setcookie("s", null, time() + 2592000, "/", "", false, true);
             $this->db->where('email', $email);
             $this->db->update('users');
         }
 
         public function createPassword($email, $password) {
-            $hashedPassword = password_hash($password);
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $this->db->set('password', $password);
             $this->db->where('email', $email);
             $this->db->replace('users');
         }
 
         public function checkPassword($email, $passwordIn) {
-            $hashedPassword = password_hash($passwordIn);
+            $hashedPassword = password_hash($passwordIn, PASSWORD_DEFAULT);
             $query = $this->db->get_where('users', array('email' => $email, 'password' => $hashedPassword));
             $matches = false;
             $row = $query->row();
@@ -131,36 +196,47 @@ class User_model extends CI_Model {
         }
 
 
-        // public function get_xml($username = null){
-        //         if($username == false){
-        //                return null;
-        //         }
+        // HELPER FUNCTIONS //
 
-        //         $query = $this->db->query("SELECT `xmlinfo` FROM `userpages` WHERE `username` = '$username'");
-        //         if($query->num_rows() == 0){
-        //                 //creates a user profile if one doesn`t exist
-        //                 // $this->db->query("INSERT INTO `userpages`(`username`, `xmlinfo`) VALUES('$username', '')");
-        //                 // $query = $this->db->query("SELECT `xmlinfo` FROM `userpages` WHERE `username` = '$username'");
-        //                 return false;
-        //         }
-        //         $row = $query->row_array();
-        //         return $row['xmlinfo'];
-        // }
+        // gets a new login token for input email. If no SID is given, one will be generated
+        private function swapToken($sessionIdentifier) {
+            
+            $newLoginToken = bin2hex(openssl_random_pseudo_bytes(16));
+            $hashedToken = password_hash($newLoginToken, PASSWORD_DEFAULT);
 
-        // public function set_xml($username, $xmlIn){
+            // Update the login token in the db
+            $this->db->set('login_token', $hashedToken);
+            $this->db->where('session_identifier', $sessionIdentifier);
+            $this->db->update('users'); 
 
-        //     $query = $this->db->query("SELECT `xmlinfo` FROM `userpages` WHERE `username` = '$username'");
-        //     if($query->num_rows() == 0){
-        //                 //creates a user profile if one doesn`t exist
-        //                  $this->db->query("INSERT INTO `userpages`(`username`, `xmlinfo`) VALUES('$username', '$xmlIn')");
-        //     }
-        //     else{
-        //         $data = array(
-        //             'xmlinfo' => $xmlIn
-        //         );
-        //         $where = array('username'=>$this->tank_auth->get_username());
-        //         $this->db->update('userpages', $data, $where);
-        //     }
+            // Set the cookies. Expires after a month of inactivity (this is arbitrary and does not really matter)
 
-        // }
+            // TODO: flip this based on local/prod (we want secure flag = true on prod)
+            setcookie("lt", $newLoginToken, time() + 2592000, "/", "", false, true);
+            setcookie("s", $sessionIdentifier, time() + 2592000, "/", "", false, true);
+        }
+
+        private function generateNewToken($uid) {
+            $newLoginToken = bin2hex(openssl_random_pseudo_bytes(16));
+            $hashedToken = password_hash($newLoginToken, PASSWORD_DEFAULT);
+
+            $sessionIdentifier = bin2hex(openssl_random_pseudo_bytes(16));
+
+            // Update the login token in the db
+            $this->db->set('login_token', $hashedToken);
+            $this->db->set('session_identifier', $sessionIdentifier);
+            $this->db->where('uid', $uid);
+            $this->db->update('users'); 
+
+            echo $hashedToken . '\n';
+            echo $sessionIdentifier . '\n';
+            echo $uid;
+
+
+            // Set the cookies. Expires after a month of inactivity (this is arbitrary and does not really matter)
+
+            // TODO: flip this based on local/prod (we want secure flag = true on prod)
+            setcookie("lt", $newLoginToken, time() + 2592000, "/", "", false, true);
+            setcookie("s", $sessionIdentifier, time() + 2592000, "/", "", false, true);
+        }
 }

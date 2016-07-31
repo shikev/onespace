@@ -11,41 +11,18 @@ class Auth extends CI_Controller
 
 	}
 
-	private function getSignInURLs() {
-		$signInURLs = [];
-
-		// Get the google sign in url
-		require_once APPPATH . 'libraries/googleAPI/vendor/autoload.php';
-		$scriptURI = base_url('auth/googleSignIn');
-		$client = new Google_Client();
-		$client->setApplicationName('Onespace Page Manager');
-		$client->setClientId('449516604176-huv86108vpvqdeafsvckemke9gaq2on2.apps.googleusercontent.com');
-		$client->setClientSecret('O1YSEBCSoXVxC8d4OfHXuowY');
-		$client->setRedirectUri($scriptURI);
-		$client->setScopes('email', 'profile');
-		$client->setDeveloperKey('AIzaSyBNCGK_QeKBH4aTmtWtUtdIQXIbJhvCOXg'); // API key
-		$signInURLs[] = $client->createAuthUrl();
-		// end google
-
-		// Get the linked in sign in url
-
-		return $signInURLs;
-	}
-
-
-	// Controller function for the login page
+	// Controller function for the login page (we gotta make the js/css for this)
 	public function login() {
-
-		$data['signInURLs'] = $this->getSignInURLs();
+		$this->load->model('auth_model');
+		$data['signInURLs'] = $this->auth_model->getSignInURLs();
 		$this->load->view('test/login', $data);
 	}
 
+	////// OAUTH2 CALLBACKS //////
+
 	public function googleSignIn() {
-		session_start();
-		// First determine what type of auth we're using (google, fb, linkedin)
-		//unset($_SESSION['access_token']);
 		require_once APPPATH . 'libraries/googleAPI/vendor/autoload.php';
-		$scriptURI = base_url('manage');
+		$scriptURI = base_url('auth/googleSignIn');
 		$client = new Google_Client();
 		$client->setApplicationName('Onespace Page Manager');
 		$client->setClientId('449516604176-huv86108vpvqdeafsvckemke9gaq2on2.apps.googleusercontent.com');
@@ -57,87 +34,92 @@ class Auth extends CI_Controller
 		//Send Client Request
 		$loginObj = new Google_Service_Oauth2($client);
 
-		//Authenticate code from Google OAuth Flow
-		//Add Access Token to Session
-		// if (isset($_GET['code'])) {
-		//   $client->authenticate($_GET['code']);
-		//   $accessToken = $client->getAccessToken();
-		//   echo $accessToken;
-		//   if ($accessToken) {
-		//   	$client->setAccessToken($accessToken);
-		//   	$userData = $loginObj->userinfo->get();
-		//   	var_dump($userdata);
-		//   }
-		//   else {
-		//   	// failed redirect to login page
-		//   }
-		// }
-		// else {
-		// 	// failed, redirect to login page
-		// }
+		if (isset($_GET['code'])) { // we received the positive auth callback, get the token and store it in session
+		    $client->authenticate($_GET['code']);
+		    $accessToken = $client->getAccessToken();
+		    if ($accessToken) {
+		    	$client->setAccessToken($accessToken);
+			    $userData = $loginObj->userinfo->get();
+			    $email = $userData["email"];
+			    $name = $userData["givenName"] . " " . $userData["familyName"];
+			    $uid = $email;
+			    if (!$this->user_model->exists($uid)) {
+					$this->user_model->create($uid, $name, $email);
+				}
+				$this->user_model->login($uid);
+		    }
+		    else {
+		    	// failure, redirect to sign in page w/ message
+		    }
+		}
+		else {
+			// failure, redirect to to sign in page w/ message
+		}
 
-		if (isset($_GET['code'])) {
-		  $client->authenticate($_GET['code']);
-		  $_SESSION['access_token'] = $client->getAccessToken();
-		  echo $_SESSION['access_token'];
-		  header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
+	}
+
+	public function facebookSignIn() {
+		session_start();
+		require_once APPPATH . 'libraries/facebookAPI/src/Facebook/autoload.php';
+		$fb = new Facebook\Facebook([
+		  'app_id' => '142858186150115',
+		  'app_secret' => '69d0832b495bbb7a1f3fa2c194ad1e4c',
+		  'default_graph_version' => 'v2.5',
+		]);
+		$helper = $fb->getRedirectLoginHelper();
+		try {
+		  $accessToken = (string) $helper->getAccessToken();
+		} catch(Facebook\Exceptions\FacebookResponseException $e) {
+		  // When Graph returns an error
+		  echo 'Graph returned an error: ' . $e->getMessage();
+		  exit;
+		} catch(Facebook\Exceptions\FacebookSDKException $e) {
+		  // When validation fails or other local issues
+		  echo 'Facebook SDK returned an error: ' . $e->getMessage();
 		  exit;
 		}
 
-		//if we have access_token continue, or else get login URL for user
-		if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
-		  $client->setAccessToken($_SESSION['access_token']);
-		    $userData = $loginObj->userinfo->get();
-		  echo '<pre>';
-		  var_dump($userData);
-		  echo '</pre';
+		$fb->setDefaultAccessToken($accessToken);
 
-		} else {
-		  $authUrl = $client->createAuthUrl();
+		try {
+		  $response = $fb->get('/me?locale=en_US&fields=name,email');
+		  $userNode = $response->getGraphUser();
+		} catch(Facebook\Exceptions\FacebookResponseException $e) {
+		  // When Graph returns an error
+		  echo 'Graph returned an error: ' . $e->getMessage();
+		  exit;
+		} catch(Facebook\Exceptions\FacebookSDKException $e) {
+		  // When validation fails or other local issues
+		  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+		  exit;
 		}
 
-		//Set Access Token to make Request
-		// if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
-		//   $client->setAccessToken($_SESSION['access_token']);
-		// }
-
-		// //Get User Data from Google Plus
-
-		// if ($client->getAccessToken()) {
-		// 	// echo '<pre>';
-		//  //  var_dump($client->getAccessToken());
-		//  //  echo '</pre';
-		//   $userData = $loginObj->userinfo->get();
-		//   // echo '<pre>';
-		//   // var_dump($userData);
-		//   // echo '</pre';
-		// } else {
-		//   $authUrl = $client->createAuthUrl();
-		//   header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
-		// }
+		$uid = $userNode->getField('id');
+		$name = $userNode->getField('name');
+		$this->initialize($uid, $name);
+		// redirect to manage page
 
 	}
 
-	function oauth2callback() {
-		require_once APPPATH . 'libraries/google_api/vendor/autoload.php';
-		$client = new Google_Client();
-		$scriptURI = base_url('auth/oauth2callback');
-		$client->setClientId('449516604176-huv86108vpvqdeafsvckemke9gaq2on2.apps.googleusercontent.com');
-		$client->setClientSecret('O1YSEBCSoXVxC8d4OfHXuowY');
-		$client->setDeveloperKey('AIzaSyBNCGK_QeKBH4aTmtWtUtdIQXIbJhvCOXg'); // API key
-		$client->setRedirectUri($scriptURI);
-		if(isset($_GET['code'])) {
-			$client->authenticate($_GET['code']);
-			echo '<pre>';
-			print_r($client->getAccessToken());
-			echo '</pre>';
+	////// END CALLBACKS //////
+
+	////// HELPERS //////
+
+	// Loads the page that initializes the user 
+	private function initialize($uid, $name, $email = null) {
+		$this->load->model('user_model');
+		// If the user doesn't exist, create them
+		if (!$this->user_model->exists($uid)) {
+			$this->user_model->create($uid, $name, $email);
+			$this->user_model->login($uid);
+			redirect('userpage/initialize');
+		}
+		else {
+			$this->user_model->login($uid);
+			redirect('userpage/manage');
 		}
 
-		//var_dump($client->getAccessToken());
 	}
-	/**
-	 * Login user on the site
-	 *
-	 * @return void
-	 */
+
+	////// END HELPERS //////
 }
