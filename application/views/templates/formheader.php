@@ -145,6 +145,10 @@
         ga('create', 'UA-65900408-1', 'auto');
         ga('send', 'pageview');
     </script>
+
+    <script>
+    <?=$scripts?>
+    </script>
     <!-- Custom Fonts -->
     <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>

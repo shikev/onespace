@@ -53,6 +53,32 @@ class User_model extends CI_Model {
             }
         }
 
+        public function getName() {
+            $sessionIdentifier = get_cookie('s');
+            $loginToken = get_cookie('lt');
+            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
+            $row = $query->row();
+            if(isset($row)) {
+                return $row->name;
+            }
+            else {
+                return null;
+            }
+        }
+
+        public function getDomain() {
+            $sessionIdentifier = get_cookie('s');
+            $loginToken = get_cookie('lt');
+            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
+            $row = $query->row();
+            if(isset($row)) {
+                return $row->domain;
+            }
+            else {
+                return null;
+            }
+        }
+
         public function getEmail() {
             $sessionIdentifier = get_cookie('s');
             $loginToken = get_cookie('lt');
@@ -92,8 +118,8 @@ class User_model extends CI_Model {
             $sessionIdentifier = get_cookie('s');
             $loginToken = get_cookie('lt');
 
-            var_dump($sessionIdentifier);
-            var_dump($loginToken);
+            // var_dump($sessionIdentifier);
+            // var_dump($loginToken);
             if (!$sessionIdentifier || !$loginToken) {
                 return false;
             }
@@ -121,12 +147,14 @@ class User_model extends CI_Model {
 
         }
 
-        public function logout($email) {
+        public function logout() {
             $this->db->set('login_token', '');
             $this->db->set('session_identifier', '');
+            $sessionIdentifier = get_cookie('s');
+            $loginToken = get_cookie('lt');
             setcookie("lt", null, time() + 2592000, "/", "", false, true);
             setcookie("s", null, time() + 2592000, "/", "", false, true);
-            $this->db->where('email', $email);
+            $this->db->where(array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
             $this->db->update('users');
         }
 
@@ -161,11 +189,13 @@ class User_model extends CI_Model {
         }
 
         // Returns the blob that holds the page information
-        public function getPageDescription($email) {
+        public function getPageDescription() {
             // Do a join on userpages. Not sure if this is efficient at all (probs not), maybe I'll know after 485
-            $this->db->select('domain');
+            $sessionIdentifier = get_cookie('s');
+            $loginToken = get_cookie('lt');
+            $this->db->select('*');
             $this->db->from('users');
-            $this->db->where(array('email' => $email));
+            $this->db->where(array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
             $this->db->join('user_pages', 'user_pages.domain = users.domain', 'right');
             $query = $this->db->get();
             $row = $query->row();
@@ -176,12 +206,14 @@ class User_model extends CI_Model {
             return $pageDescription;
         }
 
-        public function setPageDescription($email, $pageDescription) {
+        public function setPageDescription($pageDescription) {
             // Get the domain from the users table. There should be a way to do this in one query, but idk how yet
             // But who cares about performance amirite
+            $sessionIdentifier = get_cookie('s');
+            $loginToken = get_cookie('lt');
             $this->db->select('domain');
             $this->db->from('users');
-            $this->db->where(array('email' => $email));
+            $this->db->where(array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
             $query = $this->db->get();
             $row = $query->row();
             $domain = null;
