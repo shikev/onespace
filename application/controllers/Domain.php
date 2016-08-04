@@ -6,11 +6,24 @@ class Domain extends CI_Controller{
 		$this->load->helper('url');
 	}
 
-	public function isDomainAvailable()
+	public function setDomain()
 	{
 		$this->load->model('domain_model');
-		$domain = $this->input->post('domain');
-		return $this->domain_model->isDomainAvailable($domain);
+		$this->load->model('user_model');
+		if ($this->user_model->isLoggedIn()) {
+			$domain = $this->input->post('domain');
+			if($this->domain_model->isDomainAvailable($domain)) {
+				$this->user_model->setDomain($domain);
+				echo "true";
+			}
+			else {
+				echo "false";
+			}
+		} 
+		else {
+			echo "false";
+		}
+		
 	}
 
 }

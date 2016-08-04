@@ -194,7 +194,7 @@ $captcha = array(
                 <div class="col-md-2 col-sm-3">
                     <h3>Host it here for free.</h3>
                     <img src="<?php echo base_url();?>/assets/img/circle-internet.png" class="img-responsive circlesteps"></img>
-                    <p>View your page at <span class="smaller">onespace.io/username</span>.</p>
+                    <p>View your page at <span class="small-text os-darkgray">onespace.io/username</span>.</p>
                 </div>
             </div>
         </div>

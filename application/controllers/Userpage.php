@@ -16,8 +16,40 @@ class Userpage extends CI_Controller{
 	}
 
 	public function initialize() {
-		// make a form to set the domain
-		echo "this is the initializer page. Form to set domain, name, and email are here";
+		if(!$this->user_model->isLoggedIn()) {
+			redirect('', 'refresh');
+		}
+		if($this->user_model->isInitialized()) {
+			redirect('manage', 'location');
+		}
+		$headerData['pageTitle'] = "Domain Selection";
+		$data['baseURL'] = base_url();
+		$headerData['baseURL'] = base_url();
+
+		// Load the necessary scripts
+		$headerData['scripts'] = array();
+
+		$jsDirectory = 'assets/js/';
+		$headerData['scripts'][] = base_url() . $jsDirectory . 'domain-selector.js';
+
+		// Get data about user
+		$row = $this->user_model->getInfo();
+		if($row != null) {
+			$data['name'] = $row->name;
+			$data['email'] = $row->email;
+		}
+		else {
+			// should never get here
+			$this->user_model->logout();
+			redirect('', 'refresh');
+		}
+
+		$data['domain'] = 'userpage/initialize';
+
+		$this->load->view('templates/header', $headerData);
+		$this->load->view('templates/not_initialized_navbar',$data);
+		$this->load->view('content/domain_selector', $data);
+		$this->load->view('templates/footer');
 	}
 
 	public function manage(){
@@ -27,29 +59,13 @@ class Userpage extends CI_Controller{
 		}
 		// If the user has made an account but has not filled in mandatory account info (email, domain of their choice)
 		else if(!$this->user_model->isInitialized()) {
-			// Load the modal domain picker
-			$swalData['domainCheckerAddress'] = base_url('domain/isDomainAvailable');
-			$headerData['scripts'] = $this->load->view('swal/domain_picker.php', $swalData, TRUE);
-
-			$headerData['pageTitle'] = "Management Console";
-
-			// Fill in the default form data
-			$this->load->helper('form');
-			$this->load->library('form_validation');
-			$data['submitpath'] = base_url() . 'userpage/update';
-			$data['baseURL'] = base_url();
-			$data['domain'] = "";
-			$this->set_default_values($data);
-
-			$this->load->view('templates/formheader', $headerData);
-			$this->load->view('templates/logged_in_navbar', $data);
-			$this->load->view('content/forminput',$data);
-			$this->load->view('templates/footer.php');
+			redirect('userpage/initialize');
 		}
 		else{
 			$xmlstring = $this->user_model->getPageDescription();
 			$xml = simplexml_load_string($xmlstring);
 			$data['submitpath'] = base_url() . 'userpage/update';
+			$data['domain'] = $this->user_model->getDomain();
 
 			if($xml == false){
 				$this->set_default_values($data);
@@ -57,6 +73,7 @@ class Userpage extends CI_Controller{
 				$this->load->library('form_validation');
 				
 				$headerData['pageTitle'] = " | Dashboard";
+				$headerData['baseURL'] = base_url();
 
 				// navbar data
 
@@ -131,9 +148,10 @@ class Userpage extends CI_Controller{
 				$this->load->library('form_validation');
 				
 				$headerData['pageTitle'] = " | Dashboard";
+				$headerData['baseURL'] = base_url();
 
         		$this->load->view('templates/formheader', $headerData);
-				$this->load->view('templates/navbar');
+				$this->load->view('templates/logged_in_navbar', $data);
 				$this->load->view('content/forminput',$data);
 				$this->load->view('templates/footer.php');
 			}
@@ -356,17 +374,17 @@ class Userpage extends CI_Controller{
 				<skill>$skill15</skill>
 			</skills>
 		</info>";
-		$this->user_model->set_xml($this->tank_auth->get_username(), $toinsert);
+		$this->user_model->setPageDescription($toinsert);
 		$this->load->helper('url');
-		redirect(base_url() . $this->tank_auth->get_username(), 'refresh');
+		redirect(base_url() . $this->user_model->getDomain(), 'refresh');
 		
 	}
 
 	public function view($username = NULL){
 		$this->load->helper('url');
+		$headerData['baseURL'] = base_url();
 		if($username != NULL){
-			//$username = $this->tank_auth->get_username();
-			$xmlstring = $this->user_model->get_xml($username);
+			$xmlstring = $this->user_model->getPageDescription();
 			$xml = simplexml_load_string($xmlstring);
             
 
@@ -408,11 +426,12 @@ class Userpage extends CI_Controller{
                	 $this->load->view('usertemplates/'.$pagetheme.'/footer', $data);
 
 			}
-			else if($this->tank_auth->is_logged_in() && $username == $this->tank_auth->get_username()){
+			else if($this->user_model->isLoggedIn()) {
 				$headerData['pageTitle'] = " | Empty Page";
+				$data['domain'] = $this->user_model->getDomain();
 
 				$this->load->view('templates/header.php', $headerData);
-				$this->load->view('templates/navbar');
+				$this->load->view('templates/logged_in_navbar', $data);
 				$this->load->view('content/nothing.php');
 				$this->load->view('templates/footer.php');
 			}

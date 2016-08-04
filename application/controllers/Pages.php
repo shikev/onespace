@@ -5,29 +5,22 @@ class Pages extends CI_Controller{
 		parent::__construct();
 
 		$this->load->helper('url');
-		$this->load->library('tank_auth');
 		define('MAX_EXPERIENCE',      '77en98pd8z31xk'                                          );
 	}
 
 	public function index()
 	{
-		$this->load->library('user_agent');
+		// $this->load->library('user_agent');
 
-		$data['user_id']	= $this->tank_auth->get_user_id();
-		$data['username']	= $this->tank_auth->get_username();
-		$this->load->library('form_validation');
+		// $this->load->library('form_validation');
 
-		//Tank Auth Register $data
-		$data['use_username'] = $this->config->item('use_username', 'tank_auth');
-		$data['captcha_registration'] = $this->config->item('captcha_registration', 'tank_auth');
-		$data['use_recaptcha'] = $this->config->item('use_recaptcha', 'tank_auth');
+		// $headerData['pageTitle'] = "";
 
-		$headerData['pageTitle'] = "";
-
-        $this->load->view('templates/homeheader.php', $headerData);
-		$this->load->view('templates/navbar', $data);
-		$this->load->view('content/home', $data);
-		$this->load->view('templates/footer.php');
+  //       $this->load->view('templates/homeheader.php', $headerData);
+		// $this->load->view('templates/navbar', $data);
+		// $this->load->view('content/home', $data);
+		// $this->load->view('templates/footer.php');
+		echo "fuck";
 	}
 
 	public function tutorial(){

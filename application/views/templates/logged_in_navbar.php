@@ -31,7 +31,7 @@
                                 <form action="<?php echo $baseURL . $domain;?>" target="_blank"><button class="btn btn-hollow btn-nav">Webpage</button></form>
                             </li>
                             <li>
-                                <form action="<?php echo $baseURL;?>userpage/manage" target="_blank"><button class="btn btn-filled btn-nav">Dashboard</button></form>
+                                <form action="<?php echo $baseURL;?>userpage/manage"><button class="btn btn-filled btn-nav">Dashboard</button></form>
                             </li>
                         </ul>
                     </div>

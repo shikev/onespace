@@ -18,6 +18,12 @@ class Auth extends CI_Controller
 		$this->load->view('test/login', $data);
 	}
 
+	public function logout() {
+		$this->load->model('user_model');
+		$this->user_model->logout();
+		redirect('', 'Refresh');
+	}
+
 	////// OAUTH2 CALLBACKS //////
 
 	public function googleSignIn() {

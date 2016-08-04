@@ -1,5 +1,5 @@
 <?php
-class User_model extends CI_Model {
+class Domain_model extends CI_Model {
 
     public function __construct()
     {
@@ -8,13 +8,16 @@ class User_model extends CI_Model {
     }
 
     public function isDomainAvailable($domain) {
+        if(!$domain) {
+            return false;
+        }
         $query = $this->db->get_where('users', array('domain' => $domain));
         $row = $query->row();
         if(isset($row)) {
-            return true;
+            return false;
         }
         else {
-            return false;
+            return true;
         }
     }
        

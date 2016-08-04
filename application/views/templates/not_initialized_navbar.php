@@ -6,10 +6,10 @@
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="<?php echo $baseURL;?>"><img src="<?php echo $baseURL;?>assets/img/favicon.png"></img></a>
                     </div>
@@ -19,9 +19,14 @@
                             <li class="centerheight">
                                 <a class="centerheight" href="<?php echo $baseURL;?>">Home</a>
                             </li>
-                             <li><form action="<?php echo $baseURL;?>auth/login"><button class="btn btn-hollow btn-nav">Login</button></form></li>
-                            <li><form action="<?php echo $baseURL;?>auth/register"><button class="btn btn-filled btn-nav">Sign Up</button></form></li>
-
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account 
+                                <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="<?php echo $baseURL;?>auth/change_password">Change Password</a></li>
+                                    <li><a href="<?php echo $baseURL?>auth/logout">Logout</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>

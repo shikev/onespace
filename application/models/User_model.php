@@ -24,13 +24,23 @@ class User_model extends CI_Model {
             $this->generateNewToken($uid);
         }
 
-        public function isInitialized() {
+        public function logout() {
+            $this->db->set('login_token', '');
+            $this->db->set('session_identifier', '');
             $sessionIdentifier = get_cookie('s');
             $loginToken = get_cookie('lt');
-            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
+            setcookie("lt", null, time() + 2592000, "/", "", false, true);
+            setcookie("s", null, time() + 2592000, "/", "", false, true);
+            $this->db->where(array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
+            $this->db->update('users');
+        }
+
+        public function isInitialized() {
+            $sessionIdentifier = get_cookie('s');
+            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier));
             $row = $query->row();
             if(isset($row)) {
-                if (!$row->email || !$row->name || !$row->domain) {
+                if (!$row->domain) {
                     return false;
                 }
                 else {
@@ -53,6 +63,27 @@ class User_model extends CI_Model {
             }
         }
 
+        public function getInfo() {
+            $sessionIdentifier = get_cookie('s');
+            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier));
+            $row = $query->row();
+            if(isset($row)) {
+                return $row;
+            }
+            else {
+                return null;
+            }
+        }
+
+        public function setInfo($emailIn, $nameIn, $domainIn) {
+            $sessionIdentifier = get_cookie('s');
+            $this->db->set('domain', $emailIn);
+            $this->db->set('domain', $nameIn);
+            $this->db->set('domain', $domainIn);
+            $this->db->where(array('session_identifier' => $sessionIdentifier));
+            $this->db->update('users');
+        }
+
         public function getName() {
             $sessionIdentifier = get_cookie('s');
             $loginToken = get_cookie('lt');
@@ -68,14 +99,32 @@ class User_model extends CI_Model {
 
         public function getDomain() {
             $sessionIdentifier = get_cookie('s');
-            $loginToken = get_cookie('lt');
-            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
+            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier));
             $row = $query->row();
             if(isset($row)) {
                 return $row->domain;
             }
             else {
                 return null;
+            }
+        }
+
+        // sets the domain of the account (what onespace domain they want)
+        public function setDomain($domainIn) {
+            $sessionIdentifier = get_cookie('s');
+            $this->db->set('domain', $domainIn);
+            $this->db->where(array('session_identifier' => $sessionIdentifier));
+            $this->db->update('users');
+        }
+
+        public function domainExists($domainToCheck) {
+            $query = $this->db->get_where('users', array('domain' => $domainToCheck));
+            $row = $query->row();
+            if(isset($row)) {
+                return true;
+            }
+            else {
+                return false;
             }
         }
 
@@ -90,7 +139,6 @@ class User_model extends CI_Model {
             else {
                 return null;
             }
-
         }
 
         public function getUID() {
@@ -104,13 +152,6 @@ class User_model extends CI_Model {
             else {
                 return null;
             }
-        }
-
-        // sets the domain of the account (what onespace domain they want)
-        public function setDomain($domainIn) {
-            $this->db->set('domain', $domainIn);
-            $this->db->where('uid', $this->getUID());
-            $this->db->update('users');
         }
 
         public function isLoggedIn() {
@@ -145,17 +186,6 @@ class User_model extends CI_Model {
                 return false;
             }
 
-        }
-
-        public function logout() {
-            $this->db->set('login_token', '');
-            $this->db->set('session_identifier', '');
-            $sessionIdentifier = get_cookie('s');
-            $loginToken = get_cookie('lt');
-            setcookie("lt", null, time() + 2592000, "/", "", false, true);
-            setcookie("s", null, time() + 2592000, "/", "", false, true);
-            $this->db->where(array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
-            $this->db->update('users');
         }
 
         public function createPassword($email, $password) {
@@ -210,10 +240,9 @@ class User_model extends CI_Model {
             // Get the domain from the users table. There should be a way to do this in one query, but idk how yet
             // But who cares about performance amirite
             $sessionIdentifier = get_cookie('s');
-            $loginToken = get_cookie('lt');
             $this->db->select('domain');
             $this->db->from('users');
-            $this->db->where(array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
+            $this->db->where(array('session_identifier' => $sessionIdentifier));
             $query = $this->db->get();
             $row = $query->row();
             $domain = null;
