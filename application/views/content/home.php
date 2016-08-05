@@ -12,7 +12,7 @@
                     <h1>Your professional webpage crafted in minutes.</h1>
                     <p>Onespace is designed with one goal in mind - to make it as fast and as easy as possible for you to create a professional webpage.</p>
                     <h3>Sign up for free to get started!</h3>
-                    <a class="btn btn-primary google-red" href="<?php echo $facebookSignInLink;?>" role="button">Google</a>
+                    <a class="btn btn-primary google-red" href="<?php echo $googleSignInLink;?>" role="button">Google</a>
                     <a class="btn btn-primary facebook-blue" href="<?php echo $facebookSignInLink;?>" role="button">Facebook</a>
                 </div>
                 <div class="col-md-6 col-md-offset-1 col-sm-6 hidden-xs computerimg">
@@ -23,15 +23,9 @@
                     <h1>Your professional webpage crafted in minutes.</h1>
                     <p>Onespace is designed with one goal in mind - to make it as fast and as easy as possible for you to create a professional webpage.</p>
                     <h3>Sign up for free to get started!</h3>
-                    <a class="btn btn-primary google-red" href="<?php echo $facebookSignInLink;?>" role="button">Google</a>
+                    <a class="btn btn-primary google-red" href="<?php echo $googleSignInLink;?>" role="button">Google</a>
                     <a class="btn btn-primary facebook-blue" href="<?php echo $facebookSignInLink;?>" role="button">Facebook</a>
                 </div>
-            </div>
-        </div>
-        <div class="container-fluid home-form">
-            <div class="row">
-                <a class="btn btn-primary google-red" href="<?php echo $facebookSignInLink;?>" role="button">Google</a>
-                <a class="btn btn-primary facebook-blue" href="<?php echo $facebookSignInLink;?>" role="button">Facebook</a>
             </div>
         </div>
         <div id="image-container" class="home-section">
@@ -76,7 +70,7 @@
                 <div class="col-md-2 col-sm-3">
                     <h3>Host it here for free.</h3>
                     <img src="<?php echo base_url();?>/assets/img/circle-internet.png" class="img-responsive circlesteps"></img>
-                    <p>View your page at <span class="small-text os-darkgray">onespace.io/username</span>.</p>
+                    <p>View your page at onespace.io/username</p>
                 </div>
             </div>
         </div>
