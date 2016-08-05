@@ -20,7 +20,7 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
 
     <!-- Javascript -->
-    <script language="javascript" type="text/javascript" src="<?php echo $baseURL; ?>assets/js/jquery-1.10.2.js"></script>
+    <script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script language="javascript" type="text/javascript" src="<?php echo $baseURL; ?>assets/js/bootstrap.js"></script>
     <script language="javascript" type="text/javascript" src="<?php echo $baseURL; ?>assets/js/respond.js"></script>
 
@@ -40,6 +40,15 @@
     <?php echo 'onespace["baseURL"] = ' . '"' . $baseURL . '";';?>
     </script>
 
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-65900408-1', 'auto');
+        ga('send', 'pageview');
+    </script>
     <?php 
         if(isset($scripts)) {
             foreach($scripts as $scriptSource) {

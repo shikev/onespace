@@ -4,6 +4,7 @@ class Userpage extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('user_model');
+		$this->load->model('domain_model');
 		$this->load->helper('url');
 		define('MAX_EXPERIENCE', 7);
 		define('MAX_PROJECTS', 7);
@@ -62,10 +63,13 @@ class Userpage extends CI_Controller{
 			redirect('userpage/initialize');
 		}
 		else{
-			$xmlstring = $this->user_model->getPageDescription();
+			$userInfo = $this->user_model->getInfo();
+			$domain = $userInfo->domain;
+			$xmlstring = $this->domain_model->getPageDescription($domain);
 			$xml = simplexml_load_string($xmlstring);
 			$data['submitpath'] = base_url() . 'userpage/update';
-			$data['domain'] = $this->user_model->getDomain();
+			$data['domain'] = $domain;
+			$data['firstName'] = explode(' ',trim($userInfo->name))[0]; // Gets the first name
 
 			if($xml == false){
 				$this->set_default_values($data);
@@ -77,7 +81,7 @@ class Userpage extends CI_Controller{
 
 				// navbar data
 
-				$data['domain'] = $this->user_model->getDomain();
+				$data['domain'] = $domain;
 				$data['baseURL'] = base_url();
 
         		$this->load->view('templates/formheader', $headerData);
@@ -374,17 +378,18 @@ class Userpage extends CI_Controller{
 				<skill>$skill15</skill>
 			</skills>
 		</info>";
-		$this->user_model->setPageDescription($toinsert);
+		$domain = $this->user_model->getDomain();
+		$this->domain_model->setPageDescription($domain, $toinsert);
 		$this->load->helper('url');
-		redirect(base_url() . $this->user_model->getDomain(), 'refresh');
+		redirect(base_url() . $domain, 'refresh');
 		
 	}
 
-	public function view($username = NULL){
+	public function view($domain = NULL){
 		$this->load->helper('url');
 		$headerData['baseURL'] = base_url();
-		if($username != NULL){
-			$xmlstring = $this->user_model->getPageDescription();
+		if($domain != NULL){
+			$xmlstring = $this->domain_model->getPageDescription($domain);
 			$xml = simplexml_load_string($xmlstring);
             
 
@@ -428,7 +433,7 @@ class Userpage extends CI_Controller{
 			}
 			else if($this->user_model->isLoggedIn()) {
 				$headerData['pageTitle'] = " | Empty Page";
-				$data['domain'] = $this->user_model->getDomain();
+				$data['domain'] = $domain;
 
 				$this->load->view('templates/header.php', $headerData);
 				$this->load->view('templates/logged_in_navbar', $data);
@@ -562,7 +567,7 @@ class Userpage extends CI_Controller{
 		$data['secProjSubTitle'] = $xml->projects->secProjSubTitle;
 
 		for($i = 1; $i <= MAX_EXPERIENCE; $i++){
-			$data['projectName' . $i] = $xml->projects->section[$i - 1]->projectName;
+			$data['projectName' . $i] = $xml->projects->section[$i - 1]->userprojectName;
 			$data['projectDescription' . $i] = $xml->projects->section[$i - 1]->projectDescription;
 			$data['projectLink' . $i] = $xml->projects->section[$i - 1]->projectLinke;
 		}

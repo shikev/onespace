@@ -14,7 +14,9 @@ class Auth extends CI_Controller
 	// Controller function for the login page (we gotta make the js/css for this)
 	public function login() {
 		$this->load->model('auth_model');
-		$data['signInURLs'] = $this->auth_model->getSignInURLs();
+		$signInURLs = $this->auth_model->getSignInURLs();
+		$data['googleSignInLink'] = $signInURLs['google'];
+		$data['facebookSignInLink'] = $signInURLs['facebook'];
 		$this->load->view('test/login', $data);
 	}
 

@@ -12,7 +12,7 @@
     <link rel="icon" href="<?=base_url()?>assets/img/favicon.png" type="image/png">
 
     <!-- Bootstrap Core CSS -->
-    <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Vertical Tabs CSS -->
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.vertical-tabs.css" rel="stylesheet" />
     <!-- Custom CSS -->
@@ -23,8 +23,8 @@
     <link href="<?php echo base_url(); ?>assets/css/sweetalert.css" rel="stylesheet" />
 
     <!-- Javascript -->
-    <script language="javascript" type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-1.10.2.js"></script>
-    <script language="javascript" type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap.js"></script>
+    <script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
     
@@ -40,7 +40,8 @@
             var link = "<?php echo base_url()?>";
             if(validate()){
                 $.post(link + 'userpage/update', $('#form1').serialize(), function(data) {
-                        swal({title: "Success!",   text: "Your page has been saved!", confirmButtonColor: "#ad4c4c", type:"success"})});
+                    swal({title: "Success!",   text: "Your page has been saved!", confirmButtonColor: "#ad4c4c", type:"success"})
+                });
             }
         });
     }); 
@@ -148,9 +149,6 @@
         ga('send', 'pageview');
     </script>
 
-    <script>
-    <?=$scripts?>
-    </script>
     <!-- Custom Fonts -->
     <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>

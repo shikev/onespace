@@ -8,7 +8,13 @@ dark gray: #505050
 black: #303030
 */
 .os-darkgray {
-    color: #505050;
+    background-color: #505050;
+}
+.google-red {
+    background-color: #db3236;
+}
+.facebook-blue {
+    background-color: #3B5998;
 }
 
 @font-face{

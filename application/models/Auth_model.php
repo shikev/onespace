@@ -21,7 +21,7 @@ class Auth_model extends CI_Model {
             $client->setRedirectUri($scriptURI);
             $client->setScopes('email', 'profile');
             $client->setDeveloperKey('AIzaSyBNCGK_QeKBH4aTmtWtUtdIQXIbJhvCOXg'); // API key
-            $signInURLs[] = $client->createAuthUrl();
+            $signInURLs['google'] = $client->createAuthUrl();
             // end google
 
 
@@ -37,9 +37,9 @@ class Auth_model extends CI_Model {
             $helper = $fb->getRedirectLoginHelper();
             $permissions = ['email', 'public_profile']; // optional
             $loginURL = $helper->getLoginUrl(base_url('auth/facebookSignIn'), $permissions);
-            $signInURLs[] = $loginURL;
+            $signInURLs['facebook'] = $loginURL;
             // end facebook
 
             return $signInURLs;
-            }
+        }
 }

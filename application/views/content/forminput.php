@@ -9,7 +9,7 @@
                         </div>
                         <div class="col-xs-6">
                             <?php echo form_button( array('type'=>'submit', 'name'=>'formSave', 'id'=>"btnSave" ,'class'=>'btn btn-filled btn-oneline btnSave', 'content'=>'Save', 'value'=>'true'))?>
-                            <?php echo form_button( array('type'=>'submit', 'name'=>'formSaveAndView', 'id'=>"btnSaveAndView" ,'class'=>'btn btn-filled btn-oneline', 'onclick'=>'validate();', 'content'=>'Save and View', 'value'=>'true'))?>
+                            <?php echo form_button( array('type'=>'submit', 'name'=>'formSaveAndView', 'id'=>"btnSaveAndView" ,'class'=>'btn btn-filled btn-oneline btnSaveAndView', 'onclick'=>'validate();', 'content'=>'Save and View', 'value'=>'true'))?>
                         </div>
                     </div>
                     <div class="row">
@@ -868,7 +868,7 @@
                     <hr>
                     <div style="text-align:center">
                     <?php echo form_button( array('type'=>'submit', 'name'=>'formSave', 'id'=>"btnSave" ,'class'=>'btn btn-hollow btn-oneline btnSave', 'content'=>'Save', 'value'=>'true'))?>
-                            <?php echo form_button( array('type'=>'submit', 'name'=>'formSaveAndView', 'id'=>"btnSaveAndView" ,'class'=>'btn btn-filled btn-oneline', 'onclick'=>'validate();', 'content'=>'Save and View', 'value'=>'true'))?></div>
+                            <?php echo form_button( array('type'=>'submit', 'name'=>'formSaveAndView', 'id'=>"btnSaveAndView" ,'class'=>'btn btn-filled btn-oneline btnSaveAndView', 'onclick'=>'validate();', 'content'=>'Save and View', 'value'=>'true'))?></div>
                 </div>
                 <!-- end forminput container -->
             </div>

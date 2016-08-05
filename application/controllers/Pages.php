@@ -10,21 +10,32 @@ class Pages extends CI_Controller{
 
 	public function index()
 	{
-		// $this->load->library('user_agent');
+		$this->load->library('form_validation');
+		$this->load->model('user_model');
+		if($this->user_model->isLoggedIn()) {
+			redirect('manage', 'location');
+		}
+		
+		$this->load->model('auth_model');
 
-		// $this->load->library('form_validation');
+		$headerData['pageTitle'] = "";
+		$headerData['baseURL'] = base_url();
 
-		// $headerData['pageTitle'] = "";
+		$data['baseURL'] = base_url();
+		$signInURLs = $this->auth_model->getSignInURLs();
+		$data['googleSignInLink'] = $signInURLs['google'];
+		$data['facebookSignInLink'] = $signInURLs['facebook'];
 
-  //       $this->load->view('templates/homeheader.php', $headerData);
-		// $this->load->view('templates/navbar', $data);
-		// $this->load->view('content/home', $data);
-		// $this->load->view('templates/footer.php');
-		echo "fuck";
+
+        $this->load->view('templates/header.php', $headerData);
+		$this->load->view('templates/navbar', $data);
+		$this->load->view('content/home', $data);
+		$this->load->view('templates/footer.php');
 	}
 
 	public function tutorial(){
 		$headerData['pageTitle'] = " | Domain Tutorial";
+		$headerData['baseURL'] = base_url();
 		$this->load->view('templates/header.php', $headerData);
 		$this->load->view('templates/navbar');
 		$this->load->view('content/tutorial.php');
@@ -33,6 +44,7 @@ class Pages extends CI_Controller{
 
 	public function imgtutorial() {
 		$headerData['pageTitle'] = " | Image Tutorial";
+		$headerData['baseURL'] = base_url();
 		$this->load->view('templates/header.php', $headerData);
 		$this->load->view('templates/navbar');
 		$this->load->view('content/img_tutorial.php');
@@ -41,6 +53,7 @@ class Pages extends CI_Controller{
     
     public function updates() {
 		$headerData['pageTitle'] = " | What's New";
+		$headerData['baseURL'] = base_url();
 		$this->load->view('templates/header.php', $headerData);
 		$this->load->view('templates/navbar');
 		$this->load->view('content/updates.php');
@@ -48,17 +61,17 @@ class Pages extends CI_Controller{
 	}
 
 	//load the donate page
-	public function donate(){
-		$this->load->helper('form');
-		$this->load->library('form_validation');
+	// public function donate(){
+	// 	$this->load->helper('form');
+	// 	$this->load->library('form_validation');
 
-		$headerData['pageTitle'] = " | Donate";
+	// 	$headerData['pageTitle'] = " | Donate";
 
-        $this->load->view('templates/header.php', $headerData);
-		$this->load->view('templates/navbar');
-		$this->load->view('content/donations.php');
-		$this->load->view('templates/footer.php');
-	}
+ //        $this->load->view('templates/header.php', $headerData);
+	// 	$this->load->view('templates/navbar');
+	// 	$this->load->view('content/donations.php');
+	// 	$this->load->view('templates/footer.php');
+	// }
     
     //load the contact page
 	public function contact(){
@@ -66,6 +79,7 @@ class Pages extends CI_Controller{
 		$this->load->library('form_validation');
 		
 		$headerData['pageTitle'] = " | Contact";
+		$headerData['baseURL'] = base_url();
 
 		$this->form_validation->set_rules('namebox', 'Name', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('emailbox', 'Email', 'trim|required|xss_clean|callback_is_valid_email');
@@ -91,14 +105,14 @@ class Pages extends CI_Controller{
 	}
 
 	//redirect to venmo
-	public function receive_donation(){
-		$money = $this->input->post('moneybox');
-		$note = $this->input->post('notebox');
-		$venmoLink = "https://venmo.com/?txn=pay&recipients=Project-Maroon&amount=";
-		$venmoLink = $venmoLink. $money . "&note=" . $note . "&audience=public";
-		$venmoLink = str_replace(array("\n", "\r"), '', $venmoLink);
-		redirect($venmoLink, 'refresh');
-	}
+	// public function receive_donation(){
+	// 	$money = $this->input->post('moneybox');
+	// 	$note = $this->input->post('notebox');
+	// 	$venmoLink = "https://venmo.com/?txn=pay&recipients=Project-Maroon&amount=";
+	// 	$venmoLink = $venmoLink. $money . "&note=" . $note . "&audience=public";
+	// 	$venmoLink = str_replace(array("\n", "\r"), '', $venmoLink);
+	// 	redirect($venmoLink, 'refresh');
+	// }
 
 	public function redirect(){
 		$this->load->view('content/redirect.php');

@@ -86,8 +86,7 @@ class User_model extends CI_Model {
 
         public function getName() {
             $sessionIdentifier = get_cookie('s');
-            $loginToken = get_cookie('lt');
-            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
+            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier));
             $row = $query->row();
             if(isset($row)) {
                 return $row->name;
@@ -130,8 +129,7 @@ class User_model extends CI_Model {
 
         public function getEmail() {
             $sessionIdentifier = get_cookie('s');
-            $loginToken = get_cookie('lt');
-            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
+            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier));
             $row = $query->row();
             if(isset($row)) {
                 return $row->email;
@@ -143,8 +141,7 @@ class User_model extends CI_Model {
 
         public function getUID() {
             $sessionIdentifier = get_cookie('s');
-            $loginToken = get_cookie('lt');
-            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
+            $query = $this->db->get_where('users', array('session_identifier' => $sessionIdentifier));
             $row = $query->row();
             if(isset($row)) {
                 return $row->uid;
@@ -217,45 +214,6 @@ class User_model extends CI_Model {
         public function getChangePasswordLink($email) {
 
         }
-
-        // Returns the blob that holds the page information
-        public function getPageDescription() {
-            // Do a join on userpages. Not sure if this is efficient at all (probs not), maybe I'll know after 485
-            $sessionIdentifier = get_cookie('s');
-            $loginToken = get_cookie('lt');
-            $this->db->select('*');
-            $this->db->from('users');
-            $this->db->where(array('session_identifier' => $sessionIdentifier, 'login_token' => $loginToken));
-            $this->db->join('user_pages', 'user_pages.domain = users.domain', 'right');
-            $query = $this->db->get();
-            $row = $query->row();
-            $pageDescription = null;
-            if(isset($row)) {
-                $pageDescription = $row->page_description;
-            }
-            return $pageDescription;
-        }
-
-        public function setPageDescription($pageDescription) {
-            // Get the domain from the users table. There should be a way to do this in one query, but idk how yet
-            // But who cares about performance amirite
-            $sessionIdentifier = get_cookie('s');
-            $this->db->select('domain');
-            $this->db->from('users');
-            $this->db->where(array('session_identifier' => $sessionIdentifier));
-            $query = $this->db->get();
-            $row = $query->row();
-            $domain = null;
-            if(isset($row)) {
-                $domain = $row->domain;
-            }
-
-            // Update the user_pages table
-            $this->db->set('page_description', $pageDescription);
-            $this->db->where(array('domain' => $domain));
-            $this->db->update('user_pages');
-        }
-
 
         // HELPER FUNCTIONS //
 

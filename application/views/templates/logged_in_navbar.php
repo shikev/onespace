@@ -20,7 +20,7 @@
                                 <a class="centerheight" href="<?php echo $baseURL;?>">Home</a>
                             </li>
                             <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account 
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $firstName;?> 
                                 <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="<?php echo $baseURL;?>auth/change_password">Change Password</a></li>
