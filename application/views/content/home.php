@@ -12,8 +12,10 @@
                     <h1>Your professional webpage crafted in minutes.</h1>
                     <p>Onespace is designed with one goal in mind - to make it as fast and as easy as possible for you to create a professional webpage.</p>
                     <h3>Sign up for free to get started!</h3>
-                    <a class="btn btn-primary google-red" href="<?php echo $googleSignInLink;?>" role="button">Google</a>
-                    <a class="btn btn-primary facebook-blue" href="<?php echo $facebookSignInLink;?>" role="button">Facebook</a>
+                    <div class="signUpButtons">
+                    <a class="btn btn-primary btn-login btn-login-google" href="<?php echo $googleSignInLink;?>" role="button">Google</a>
+                    <a class="btn btn-primary btn-login btn-login-facebook" href="<?php echo $facebookSignInLink;?>" role="button">Facebook</a>
+                    </div>
                 </div>
                 <div class="col-md-6 col-md-offset-1 col-sm-6 hidden-xs computerimg">
                     <img src="<?php echo base_url();?>/assets/img/theme2macbook.png" class="img-responsive"></img>
@@ -23,8 +25,10 @@
                     <h1>Your professional webpage crafted in minutes.</h1>
                     <p>Onespace is designed with one goal in mind - to make it as fast and as easy as possible for you to create a professional webpage.</p>
                     <h3>Sign up for free to get started!</h3>
-                    <a class="btn btn-primary google-red" href="<?php echo $googleSignInLink;?>" role="button">Google</a>
-                    <a class="btn btn-primary facebook-blue" href="<?php echo $facebookSignInLink;?>" role="button">Facebook</a>
+                    <div class="signUpButtons">
+                    <a class="btn btn-primary btn-login btn-login-google" href="<?php echo $googleSignInLink;?>" role="button">Google</a>
+                    <a class="btn btn-primary btn-login btn-login-facebook" href="<?php echo $facebookSignInLink;?>" role="button">Facebook</a>
+                    </div>
                 </div>
             </div>
         </div>

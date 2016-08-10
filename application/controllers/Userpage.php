@@ -63,6 +63,21 @@ class Userpage extends CI_Controller{
 			redirect('userpage/initialize');
 		}
 		else{
+			// set CSS
+			$headerData['CSSSources'] = array();
+			$headerData['CSSSources'][] = "http://fonts.googleapis.com/css?family=Lato";
+			$headerData['CSSSources'][] = "http://fonts.googleapis.com/css?family=Roboto";
+			$headerData['CSSSources'][] = "http://fonts.googleapis.com/css?family=Open+Sans";
+			$headerData['CSSSources'][] = "http://fonts.googleapis.com/css?family=Lora";
+			$headerData['CSSSources'][] = "http://fonts.googleapis.com/css?family=Dosis";
+			$headerData['CSSSources'][] = base_url() . "assets/css/spectrum.css";
+			$headerData['CSSSources'][] = base_url() . "assets/css/bootstrap.vertical-tabs.css";
+
+			// set js
+			$headerData['scripts'] = array();
+			$headerData['scripts'][] = base_url() . "assets/js/spectrum.js";
+			$headerData['scripts'][] = base_url() . "assets/js/manage.js";
+
 			$userInfo = $this->user_model->getInfo();
 			$domain = $userInfo->domain;
 			$xmlstring = $this->domain_model->getPageDescription($domain);
@@ -84,7 +99,7 @@ class Userpage extends CI_Controller{
 				$data['domain'] = $domain;
 				$data['baseURL'] = base_url();
 
-        		$this->load->view('templates/formheader', $headerData);
+        		$this->load->view('templates/header', $headerData);
 				$this->load->view('templates/logged_in_navbar', $data);
 				$this->load->view('content/forminput',$data);
 				$this->load->view('templates/footer.php');
@@ -154,7 +169,7 @@ class Userpage extends CI_Controller{
 				$headerData['pageTitle'] = " | Dashboard";
 				$headerData['baseURL'] = base_url();
 
-        		$this->load->view('templates/formheader', $headerData);
+        		$this->load->view('templates/header', $headerData);
 				$this->load->view('templates/logged_in_navbar', $data);
 				$this->load->view('content/forminput',$data);
 				$this->load->view('templates/footer.php');

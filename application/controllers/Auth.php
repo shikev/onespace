@@ -17,7 +17,27 @@ class Auth extends CI_Controller
 		$signInURLs = $this->auth_model->getSignInURLs();
 		$data['googleSignInLink'] = $signInURLs['google'];
 		$data['facebookSignInLink'] = $signInURLs['facebook'];
-		$this->load->view('test/login', $data);
+		$data['baseURL'] = base_url();
+		$headerData['baseURL'] = base_url();
+
+		$this->load->view('templates/header.php', $headerData);
+		$this->load->view('templates/navbar', $data);
+		$this->load->view('auth/login', $data);
+		$this->load->view('templates/footer.php');
+	}
+
+	public function register() {
+		$this->load->model('auth_model');
+		$signInURLs = $this->auth_model->getSignInURLs();
+		$data['googleSignInLink'] = $signInURLs['google'];
+		$data['facebookSignInLink'] = $signInURLs['facebook'];
+		$data['baseURL'] = base_url();
+		$headerData['baseURL'] = base_url();
+
+		$this->load->view('templates/header.php', $headerData);
+		$this->load->view('templates/navbar', $data);
+		$this->load->view('auth/register', $data);
+		$this->load->view('templates/footer.php');
 	}
 
 	public function logout() {
@@ -64,7 +84,6 @@ class Auth extends CI_Controller
 	}
 
 	public function facebookSignIn() {
-		session_start();
 		require_once APPPATH . 'libraries/facebookAPI/src/Facebook/autoload.php';
 		$fb = new Facebook\Facebook([
 		  'app_id' => '142858186150115',

@@ -44,7 +44,7 @@ class FacebookSessionPersistentDataHandler implements PersistentDataInterface
      *
      * @throws FacebookSDKException
      */
-    public function __construct($enableSessionCheck = true)
+    public function __construct($enableSessionCheck = false)
     {
         if ($enableSessionCheck && session_status() !== PHP_SESSION_ACTIVE) {
             throw new FacebookSDKException(

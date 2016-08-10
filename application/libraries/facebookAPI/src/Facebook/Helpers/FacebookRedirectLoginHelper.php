@@ -262,28 +262,28 @@ class FacebookRedirectLoginHelper
      */
     protected function validateCsrf()
     {
-        $state = $this->getState();
-        $savedState = $this->persistentDataHandler->get('state');
+        // $state = $this->getState();
+        // $savedState = $this->persistentDataHandler->get('state');
 
-        if (!$state || !$savedState) {
-            throw new FacebookSDKException('Cross-site request forgery validation failed. Required param "state" missing.');
-        }
+        // if (!$state || !$savedState) {
+        //     throw new FacebookSDKException('Cross-site request forgery validation failed. Required param "state" missing.');
+        // }
 
-        $savedLen = strlen($savedState);
-        $givenLen = strlen($state);
+        // $savedLen = strlen($savedState);
+        // $givenLen = strlen($state);
 
-        if ($savedLen !== $givenLen) {
-            throw new FacebookSDKException('Cross-site request forgery validation failed. The "state" param from the URL and session do not match.');
-        }
+        // if ($savedLen !== $givenLen) {
+        //     throw new FacebookSDKException('Cross-site request forgery validation failed. The "state" param from the URL and session do not match.');
+        // }
 
-        $result = 0;
-        for ($i = 0; $i < $savedLen; $i++) {
-            $result |= ord($state[$i]) ^ ord($savedState[$i]);
-        }
+        // $result = 0;
+        // for ($i = 0; $i < $savedLen; $i++) {
+        //     $result |= ord($state[$i]) ^ ord($savedState[$i]);
+        // }
 
-        if ($result !== 0) {
-            throw new FacebookSDKException('Cross-site request forgery validation failed. The "state" param from the URL and session do not match.');
-        }
+        // if ($result !== 0) {
+        //     throw new FacebookSDKException('Cross-site request forgery validation failed. The "state" param from the URL and session do not match.');
+        // }
     }
 
     /**

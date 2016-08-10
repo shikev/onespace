@@ -8,7 +8,6 @@ class Auth_model extends CI_Model {
         }
 
         public function getSignInURLs() {
-            session_start();
             $signInURLs = [];
 
             // Get the google sign in url

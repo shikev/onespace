@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +13,7 @@
     <!-- Bootstrap Core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Vertical Tabs CSS -->
-    <link href="<?php echo base_url(); ?>assets/css/bootstrap.vertical-tabs.css" rel="stylesheet" />
+    <link href="<?php echo base_url(); ?>assets/css/bootstrap.vertical-tabs.css" rel="stylesheet"/>
     <!-- Custom CSS -->
     <link href="<?php echo base_url(); ?>assets/css/custom-styles.css" rel="stylesheet" />
 
