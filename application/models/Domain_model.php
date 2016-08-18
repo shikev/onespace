@@ -37,6 +37,7 @@ class Domain_model extends CI_Model {
             );
             $this->db->insert('user_pages', $data);
         }
+        echo $pageDescription;
     }
 
     public function getPageDescription($domain) {

@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('.btnSave').click(function(event) {
         event.preventDefault();
-        var link = "<?php echo base_url()?>";
+        var link = onespace.baseURL;
         if (validate()) {
             $.post(link + 'userpage/update', $('#form1').serialize(), function(data) {
                 swal({

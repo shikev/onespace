@@ -11,7 +11,7 @@
     <link rel="icon" href="<?php echo $baseURL;?>assets/img/favicon.png" type="image/png">
 
     <!-- Bootstrap Core CSS -->
-    <link href="<?php echo $baseURL; ?>assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Custom CSS -->
     <link href="<?php echo $baseURL; ?>assets/css/custom-styles.css" rel="stylesheet" />
@@ -21,19 +21,11 @@
 
     <!-- Javascript -->
     <script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script language="javascript" type="text/javascript" src="<?php echo $baseURL; ?>assets/js/bootstrap.js"></script>
-    <script language="javascript" type="text/javascript" src="<?php echo $baseURL; ?>assets/js/respond.js"></script>
+    <script language="javascript" type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- SweetAlert JS + CSS-->
     <script language="javascript" type="text/javascript" src="<?php echo $baseURL; ?>assets/js/sweetalert.min.js"></script>
     <link href="<?php echo $baseURL; ?>assets/css/sweetalert.css" rel="stylesheet" />
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
     <script language="javascript" type="text/javascript" src="<?php echo $baseURL; ?>assets/js/onespace-global.js"></script>
     <script>

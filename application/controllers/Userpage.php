@@ -30,7 +30,7 @@ class Userpage extends CI_Controller{
 		// Load the necessary scripts
 		$headerData['scripts'] = array();
 
-		$jsDirectory = 'assets/js/';
+		$jsDirectory = 'assets/js/pages/';
 		$headerData['scripts'][] = base_url() . $jsDirectory . 'domain-selector.js';
 
 		// Get data about user
@@ -76,7 +76,7 @@ class Userpage extends CI_Controller{
 			// set js
 			$headerData['scripts'] = array();
 			$headerData['scripts'][] = base_url() . "assets/js/spectrum.js";
-			$headerData['scripts'][] = base_url() . "assets/js/manage.js";
+			$headerData['scripts'][] = base_url() . "assets/js/pages/manage.js";
 
 			$userInfo = $this->user_model->getInfo();
 			$domain = $userInfo->domain;
