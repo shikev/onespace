@@ -3,9 +3,7 @@ class Pages extends CI_Controller{
 	public function __construct()
 	{
 		parent::__construct();
-
 		$this->load->helper('url');
-		define('MAX_EXPERIENCE',      '77en98pd8z31xk'                                          );
 	}
 
 	public function index()
@@ -20,11 +18,14 @@ class Pages extends CI_Controller{
 
 		$headerData['pageTitle'] = "";
 		$headerData['baseURL'] = base_url();
+		$headerData['CSSSources'][] = base_url() . 'assets/css/home-styles.css';
+		$headerData['CSSSources'][] = base_url() . 'assets/css/navbar-styles.css';
 
 		$data['baseURL'] = base_url();
 		$signInURLs = $this->auth_model->getSignInURLs();
 		$data['googleSignInLink'] = $signInURLs['google'];
 		$data['facebookSignInLink'] = $signInURLs['facebook'];
+
 
 
         $this->load->view('templates/header.php', $headerData);
@@ -34,8 +35,9 @@ class Pages extends CI_Controller{
 	}
 
 	public function tutorial(){
-		$headerData['pageTitle'] = " | Domain Tutorial";
+		$headerData['pageTitle'] = "Domain Tutorial";
 		$headerData['baseURL'] = base_url();
+		$headerData['CSSSources'][] = base_url() . 'assets/css/custom-styles.css';
 		$this->load->view('templates/header.php', $headerData);
 		$this->load->view('templates/navbar');
 		$this->load->view('content/tutorial.php');
@@ -43,8 +45,9 @@ class Pages extends CI_Controller{
 	}
 
 	public function imgtutorial() {
-		$headerData['pageTitle'] = " | Image Tutorial";
+		$headerData['pageTitle'] = "Image Tutorial";
 		$headerData['baseURL'] = base_url();
+		$headerData['CSSSources'][] = base_url() . 'assets/css/custom-styles.css';
 		$this->load->view('templates/header.php', $headerData);
 		$this->load->view('templates/navbar');
 		$this->load->view('content/img_tutorial.php');
@@ -52,8 +55,9 @@ class Pages extends CI_Controller{
 	}
     
     public function updates() {
-		$headerData['pageTitle'] = " | What's New";
+		$headerData['pageTitle'] = "What's New";
 		$headerData['baseURL'] = base_url();
+		$headerData['CSSSources'][] = base_url() . 'assets/css/custom-styles.css';
 		$this->load->view('templates/header.php', $headerData);
 		$this->load->view('templates/navbar');
 		$this->load->view('content/updates.php');
@@ -75,10 +79,12 @@ class Pages extends CI_Controller{
     
     //load the contact page
 	public function contact(){
+		$headerData['CSSSources'][] = base_url() . 'assets/css/custom-styles.css';
+
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 		
-		$headerData['pageTitle'] = " | Contact";
+		$headerData['pageTitle'] = "Contact";
 		$headerData['baseURL'] = base_url();
 
 		$this->form_validation->set_rules('namebox', 'Name', 'trim|required|xss_clean');

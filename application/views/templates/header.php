@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Onespace<?php echo $pageTitle ?></title>
+    <title>Onespace | <?php echo $pageTitle ?></title>
 
     <link rel="icon" href="<?php echo $baseURL;?>assets/img/favicon.png" type="image/png">
 
@@ -14,7 +14,16 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Custom CSS -->
-    <link href="<?php echo $baseURL; ?>assets/css/custom-styles.css" rel="stylesheet" />
+
+    <?php 
+        if(isset($CSSSources)) {
+            foreach($CSSSources as $CSSSource) {
+                $linkTemplate = '<link href=styleSheetSourceToReplace rel="stylesheet"/>';
+                $linkElement = str_replace('styleSheetSourceToReplace', $CSSSource, $linkTemplate);
+                echo $linkElement;
+            }
+        }
+    ?>
     
     <!-- Font -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
@@ -42,15 +51,7 @@
         }
     ?>
 
-    <?php 
-        if(isset($CSSSources)) {
-            foreach($CSSSources as $CSSSource) {
-                $linkTemplate = '<link href=styleSheetSourceToReplace rel="stylesheet"/>';
-                $linkElement = str_replace('styleSheetSourceToReplace', $CSSSource, $linkTemplate);
-                echo $linkElement;
-            }
-        }
-    ?>
+    
 
     <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

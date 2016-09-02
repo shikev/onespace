@@ -19,6 +19,12 @@ class Auth extends CI_Controller
 		$data['facebookSignInLink'] = $signInURLs['facebook'];
 		$data['baseURL'] = base_url();
 		$headerData['baseURL'] = base_url();
+		$headerData['pageTitle'] = "Login";
+
+		// Load these style sheets
+
+		$headerData['CSSSources'][] = base_url() . 'assets/css/login-styles.css';
+		$headerData['CSSSources'][] = base_url() . 'assets/css/navbar-styles.css';
 
 		$this->load->view('templates/header.php', $headerData);
 		$this->load->view('templates/navbar', $data);
@@ -33,6 +39,11 @@ class Auth extends CI_Controller
 		$data['facebookSignInLink'] = $signInURLs['facebook'];
 		$data['baseURL'] = base_url();
 		$headerData['baseURL'] = base_url();
+
+		// Load stylesheets
+
+		$headerData['CSSSources'][] = base_url() . 'assets/css/login-styles.css';
+		$headerData['CSSSources'][] = base_url() . 'assets/css/navbar-styles.css';
 
 		$this->load->view('templates/header.php', $headerData);
 		$this->load->view('templates/navbar', $data);

@@ -1,12 +1,12 @@
     <div id="content">
         <div class="container-fluid home-section">
             <div class="row">
-                <div class="col-sm-6 col-sm-offset-3 visible-sm" style="margin-top:-30px; margin-bottom:15px;">
+                <div class="col-sm-6 col-sm-offset-3 visible-sm onespace-logo">
                     <img src="<?php echo base_url();?>/assets/img/onespace_logo.png" class="img-responsive"></img>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 visible-xs" style="margin-top:-75px;">
+                <div class="col-md-4 visible-xs mobile-cover">
                     <img src="<?php echo base_url();?>/assets/img/onespace_logo.png" class="img-responsive col-xs-12"></img>
                     <img src="<?php echo base_url();?>/assets/img/theme2macbook.png" class="img-responsive col-xs-12" style="margin-top:30px; margin-bottom:15px;"></img>
                     <h1>Your professional webpage crafted in minutes.</h1>
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div id="image-container" class="home-section">
+        <div class="home-section home-image-container">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-5 col-md-offset-1 col-sm-6">

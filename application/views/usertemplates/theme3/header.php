@@ -11,18 +11,18 @@
 
     <title><?php echo $personName?></title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="<?php echo base_url()?>assets/css/bootstrap.min.css" rel="stylesheet">
-
     <!--Styles for this site-->
     <link rel='stylesheet' type='text/css' href="<?php echo base_url()?>assets/css/usertemplates/theme3.css">
    <!--  <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>assets/css/slick-theme.css"/> -->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>assets/css/slick.css"/>
 
     
-    <!--JavaScript-->
-    <script language="javascript" type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-1.10.2.js"></script>
-    <script language="javascript" type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Javascript -->
+    <script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script language="javascript" type="text/javascript" src="<?php echo base_url(); ?>assets/js/slick.min.js"></script>
 
     <script src="https://use.fonticons.com/96b52f87.js"></script>

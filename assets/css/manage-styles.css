@@ -1,0 +1,433 @@
+
+body { padding: 2em; }
+
+
+
+
+@font-face{
+    font-family: 'variane';
+    src: url('../fonts/Variane-Script.ttf');
+}
+
+/*GENERAL*/
+html {
+    width: 100%;
+    height: 100%;
+}
+body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    background-color: #fcfcfc;
+}
+#pagewrapper{
+    min-height: 100%;
+    position:relative;
+}
+#content{
+    padding-bottom:150px;
+}
+
+/*FONTS*/
+.lato{
+    font-family: "lato", sans-serif;
+}
+.roboto{
+    font-family: "roboto", sans-serif;
+}
+.opensans{
+    font-family: "opensans", sans-serif;
+}
+.lora{
+    font-family: "lora", sans-serif;
+}
+.dosis{
+    font-family: "dosis", sans-serif;
+}
+.lobster{
+    font-family: "lobster", sans-serif;
+}
+.variane{
+    font-family: "variane", sans-serif;
+}
+
+h2 {
+    color: #fcfcfc;
+    font-size: 2em;
+}
+h3 {
+    color: #303030;
+    font-size: 1.5em;
+}
+h4 {
+    color: #303030;
+    font-size: 1.4em;
+}
+h5 {
+    color: #303030;
+    font-size: 1.3em;
+}
+p {
+    font-size: 1.2em;
+    color: #505050;
+}
+
+.small-text {
+    font-size: .9em;
+}
+
+a {
+    color: #ad4c4c;
+}
+a:hover {
+    color: #a14040;
+    text-decoration: none;
+}
+a:active {
+    color: #a14040;
+    text-decoration: none;
+}
+a:focus {
+    color: #a14040;
+    text-decoration: none;
+}
+.center-text {
+    text-align: center !important;
+}
+hr {
+    border: 0px;
+    border-top: 1px solid #ddd;
+}
+
+/*FOOTER*/
+footer {
+    width:100%;
+    height:150px;
+    position:absolute;
+    bottom:0;
+    left:0;
+    padding-bottom: 30px;
+}
+.footer-border {
+    border-top: 1px solid #ddd;
+    padding-bottom: 30px;
+}
+
+/*BUTTONS*/
+.btn-filled {
+    background-color: #ad4c4c;
+    font-size: 1.2em;
+    color: #fcfcfc;
+    border-color: #a14040;
+}
+.btn-filled:hover {
+    background-color: #a14040;
+    border-color: #a14040;
+    color: #fcfcfc;
+}
+.btn-filled.active,
+.btn-primary:active {
+    color: #fcfcfc;
+    background-color: #a14040;
+}
+.btn-filled:focus {
+    color: #fcfcfc;
+}
+.btn-hollow {
+    background-color: #f3f3f3;
+    font-size: 1em;
+    color: #303030;
+    border-color: #f0f0f0;
+}
+.btn-hollow:hover {
+    background-color: #f0f0f0;
+    color: #303030;
+    border-color: #f0f0f0;
+}
+.btn-hollow.active,
+.btn-hollow:active {
+    background-color: #f3f3f3;
+    color: #303030;
+    border-color: #f0f0f0;
+}
+.btn-intro {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 1.3em;
+    width: 100px;
+}
+.btn-nav {
+    font-size: 1em;
+    height: 40px;
+    line-height: 40px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-left: 10px;
+    margin-right: 5px;
+    margin-top: 25px;
+    min-width: 90px;
+}
+.btn-submit{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.btn:focus,.btn:active:focus,.btn.active:focus,
+.btn.focus,.btn:active.focus,.btn.active.focus {
+   outline: none;
+}
+.btn-oneline {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 1em;
+}
+
+/*FORMINPUT*/
+.hidden {
+    display: none;
+}
+.section {
+    display: none;
+    border-right: 1px;
+    /*margin-bottom: 20px;*/
+}
+hr.sec {
+    margin-bottom: 35px;
+}
+.advanced hr {
+    margin-bottom: 10px !important;
+}
+
+/*THEME SELECTOR*/
+label {
+    font-weight: 600;
+}
+.thumb {
+    margin-bottom: 30px;
+}
+.theme-label > .theme-input {
+    visibility: hidden;
+    position: absolute;
+}
+.theme-label > .theme-input + .theme-img {
+    cursor: pointer;
+    border: 3px solid #E5E5E5;
+    border-radius: 4px;
+}
+.theme-label > .theme-input:checked + .theme-img {
+    border: 3px solid #AD4C4C;
+}
+
+.theme-label > img {
+    width: 100%;
+}
+
+/*FONT COLOR SELECTOR*/
+input[type="radio"] {
+    display:none;
+}
+input[type="radio"] + label {
+    color: #303030;
+    font-size: 1.1em;
+    margin-left: 15px;
+}
+input[type="radio"] + label span {
+    display:inline-block;
+    background-color: #fcfcfc;
+    width:15px;
+    height:15px;
+    margin:-4px 4px 0 0;
+    vertical-align:middle;
+    cursor:pointer;
+    border-style:solid;
+    border-width:1px;
+    -moz-border-radius: 25%;
+    border-radius: 25%;
+}
+input[type="radio"]:checked + label span{
+     background-color: #AD4C4C;
+}
+input[type="radio"] + label span,
+input[type="radio"]:checked + label span {
+  -webkit-transition:background-color 0.1s linear;
+  -o-transition:background-color 0.1s linear;
+  -moz-transition:background-color 0.1s linear;
+  transition:background-color 0.1s linear;
+}
+#fontExample{
+    font-size: 1.2em;
+}
+
+/*ALL FORMS*/
+/*the main parent div is given class="container form"*/
+.form {
+    background: #fcfcfc;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    margin-top: 45px;
+    margin-bottom: 45px;
+    overflow: hidden;
+    padding-bottom: 15px;
+}
+.form.dialogbox {
+    margin-bottom: 20px;
+    padding: 20px;
+}
+/*Form element styles*/
+.form > .title {
+    background: #AD4C4C;
+    color: #fcfcfc;
+    font-size: 1.8em;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    vertical-align: middle;
+    margin-left: -20px;
+    margin-right: -20px;
+}
+.form > .titlebar {
+    background: #AD4C4C;
+    color: #fcfcfc;
+    height: 70px;
+    width:100%;
+    line-height: 70px;
+    text-align: right;
+    vertical-align: middle;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.form > .heading {
+    color: #303030;
+    margin-bottom: 1px;
+    padding-top: 10px;
+    text-align: left;
+}
+.form > .field {
+    margin-bottom: 0;
+    top: 0px;
+    width: 100%;
+}
+.form > .error {
+    color: #ad4c4c;
+    margin-bottom: 0;
+}
+.form-control {
+    border-radius: 5px !important;
+}
+.form textarea {
+    height: 6em;
+    resize: vertical;
+}
+.form hr {
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+.form h3 {
+    margin-top: 10px;
+}
+/*Forminput styles*/
+.form.input {
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+}
+.form.input > .row {
+    display: table;
+    margin-left: 0;
+}
+.form.input > .row > div[class^="col-"] {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+    padding-left: 0;
+}
+.tab-pane {
+    padding-left: 15px;
+}
+.tab-pane > .advanced > .row {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.tab-pane h2 {
+    padding-bottom: 10px;
+}
+button[id^="btnAddSub"] {
+    float: right;
+}
+#omitNote {
+    margin-top: 10px;
+    margin-left: 8px;
+    margin-right: 8px;
+    color: #505050;
+}
+.form.input > hr {
+    width: 100%;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+#customCssDiv {
+    width: 80%;
+}
+
+/*TABS*/
+.nav-tabs-holder {
+    border-right: 1px solid #ddd !important;
+    padding-right: 0;
+}
+
+.nav-tabs {
+    border: 0;
+}
+
+.nav-tabs>li {
+    margin-bottom: 0 !important;
+    border: 0;
+}
+.nav-tabs>li>a {
+    color: #505050;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    margin-left: -7px !important;
+    margin-right: 0 !important;
+    -webkit-transition: background-color 100ms linear;
+    -moz-transition: background-color 100ms linear;
+    -o-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:hover,
+.nav-tabs>li.active>a:focus {
+    color: #f2f2f2;
+    background: #AD4C4C;
+    border: 1px solid #AD4C4C;
+    -webkit-transition: border-color 100ms linear;
+    -moz-transition: border-color 100ms linear;
+    -o-transition: border-color 100ms linear;
+    -ms-transition: border-color 100ms linear;
+    transition: border-color 100ms linear;
+}
+.nav-tabs>li>a:hover {
+    background: #ddd;
+    /*border-color: transparent;*/
+    -webkit-transition: background-color 250ms linear;
+    -moz-transition: background-color 250ms linear;
+    -o-transition: background-color 250ms linear;
+    -ms-transition: background-color 250ms linear;
+    transition: background-color 250ms linear;
+}
+.nav-tabs>li>a:focus {
+    background: #f2f2f2;
+    color: #505050;
+}
+
+/*AUTOFILL*/
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #EBD5D5 inset;
+}

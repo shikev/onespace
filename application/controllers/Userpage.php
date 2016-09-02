@@ -33,6 +33,11 @@ class Userpage extends CI_Controller{
 		$jsDirectory = 'assets/js/pages/';
 		$headerData['scripts'][] = base_url() . $jsDirectory . 'domain-selector.js';
 
+		// Load stylesheets
+
+		$headerData['CSSSources'][] = base_url() . 'assets/css/userpage-initialize-styles.css';
+		$headerData['CSSSources'][] = base_url() . 'assets/css/navbar-styles.css';
+
 		// Get data about user
 		$row = $this->user_model->getInfo();
 		if($row != null) {
@@ -72,6 +77,8 @@ class Userpage extends CI_Controller{
 			$headerData['CSSSources'][] = "http://fonts.googleapis.com/css?family=Dosis";
 			$headerData['CSSSources'][] = base_url() . "assets/css/spectrum.css";
 			$headerData['CSSSources'][] = base_url() . "assets/css/bootstrap.vertical-tabs.css";
+			$headerData['CSSSources'][] = base_url() . "assets/css/navbar-styles.css";
+			$headerData['CSSSources'][] = base_url() . "assets/css/manage-styles.css";
 
 			// set js
 			$headerData['scripts'] = array();
@@ -91,7 +98,7 @@ class Userpage extends CI_Controller{
 				$this->load->helper('form');
 				$this->load->library('form_validation');
 				
-				$headerData['pageTitle'] = " | Dashboard";
+				$headerData['pageTitle'] = "Dashboard";
 				$headerData['baseURL'] = base_url();
 
 				// navbar data
@@ -396,7 +403,7 @@ class Userpage extends CI_Controller{
 		$domain = $this->user_model->getDomain();
 		$this->domain_model->setPageDescription($domain, $toinsert);
 		$this->load->helper('url');
-		redirect(base_url() . $domain, 'refresh');
+		redirect(base_url() . $domain, 'location');
 		
 	}
 
